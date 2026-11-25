@@ -372,18 +372,6 @@
         errores.push({ texto: 'Agregue al menos un registro de “' + cont.dataset.titulo + '”', foco: $('[data-add]', cont) });
       }
     });
-    if (n === 2) {
-      var esperado = Number($('#empresas-numero').value || 0);
-      var capturadas = $$('[data-repeat="empresas.lista"] .rep-item').length;
-      if (esperado && capturadas !== esperado) {
-        errores.push({ texto: 'Indicó ' + esperado + ' empresas y hay ' + capturadas + ' fichas. Ajuste el número o las fichas.', foco: $('#empresas-numero') });
-      }
-    }
-    if (n === 4 && valorClave(form, 'h2h.tiene') === 'si') {
-      var bancosH2h = valorClave(form, 'h2h.bancos') || [];
-      var otrosH2h = (valorClave(form, 'h2h.bancos_otros') || '').trim();
-      if (!bancosH2h.length && !otrosH2h) errores.push({ texto: '¿Con qué bancos tienen H2H?: marque al menos uno o escríbalo en “Otros bancos”', foco: $('[data-k="h2h.bancos_otros"]') });
-    }
     if (n === ULTIMO && !$('#consentimiento').checked) {
       errores.push({ texto: 'Para enviar, marque la casilla de consentimiento del aviso de privacidad', foco: $('#consentimiento') });
     }

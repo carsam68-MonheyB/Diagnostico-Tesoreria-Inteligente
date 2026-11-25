@@ -92,8 +92,8 @@
         <p>La información financiera y operativa de su empresa que capture aquí (bancos, cuentas, créditos, coberturas, sistemas y volúmenes) se usará <strong>exclusivamente</strong> para elaborar el diagnóstico y la propuesta del tablero. No se compartirá con terceros, salvo el proveedor tecnológico que aloja este sitio y recibe el formulario (Netlify), y se tratará como confidencial. Detalle completo en el <a href="/aviso-de-privacidad.html#confidencialidad" target="_blank" rel="noopener">apartado de confidencialidad</a>.</p>
       </div>
 
-      <p><strong>Antes de empezar</strong> conviene tener a la mano: la lista de empresas del grupo, la relación de cuentas bancarias, las condiciones de sus créditos y coberturas, y saber qué sistemas usan. Si no tiene un dato, puede escribir “No sé” o dejarlo en blanco cuando no sea obligatorio.</p>
-      <p class="nota">Los campos marcados con <span class="req" aria-hidden="true">*</span> son obligatorios. Las tasas se piden siempre como <strong>tasas nominales anuales</strong>.</p>
+      <p><strong>Antes de empezar</strong> conviene tener a la mano: la lista de empresas del grupo, la relación de cuentas bancarias, las condiciones de sus créditos y coberturas, y saber qué sistemas usan. Si no tiene un dato, déjelo en blanco y continúe.</p>
+      <p class="nota">Solo son obligatorios el nombre del grupo y los datos de contacto (marcados con <span class="req" aria-hidden="true">*</span>). Lo demás conteste lo que tenga a la mano: un dato en blanco no impide avanzar. Las tasas se piden siempre como <strong>tasas nominales anuales</strong>.</p>
     </section>
 
     <!-- ===================================================== PASO 1 -->
@@ -107,12 +107,12 @@
       <div class="campos dos">
         <label class="campo ancho"><span class="etq">Nombre del grupo o empresa principal<span class="req" aria-hidden="true">*</span></span>
           <input type="text" data-k="contacto.grupo" required autocomplete="organization" maxlength="200"></label>
-        <label class="campo"><span class="etq">Giro o sector<span class="req" aria-hidden="true">*</span></span>
-          <select data-k="contacto.giro" data-opc="giros" required></select></label>
-        <label class="campo" data-si="contacto.giro:otro"><span class="etq">¿Cuál giro?<span class="req" aria-hidden="true">*</span></span>
-          <input type="text" data-k="contacto.giro_otro" required maxlength="120"></label>
-        <label class="campo"><span class="etq">Ciudad<span class="req" aria-hidden="true">*</span></span>
-          <input type="text" data-k="contacto.ciudad" required autocomplete="address-level2" maxlength="120"></label>
+        <label class="campo"><span class="etq">Giro o sector</span>
+          <select data-k="contacto.giro" data-opc="giros"></select></label>
+        <label class="campo" data-si="contacto.giro:otro"><span class="etq">¿Cuál giro?</span>
+          <input type="text" data-k="contacto.giro_otro" maxlength="120"></label>
+        <label class="campo"><span class="etq">Ciudad</span>
+          <input type="text" data-k="contacto.ciudad" autocomplete="address-level2" maxlength="120"></label>
       </div>
 
       <h3>Persona de contacto</h3>
@@ -128,10 +128,10 @@
       </div>
 
       <fieldset class="grupo">
-        <legend>¿Quién usará el tablero?<span class="req" aria-hidden="true">*</span></legend>
-        <div class="opciones col2" data-grupo="contacto.usuarios_tablero" data-opc="usuarios_tablero" data-tipo="checkbox" data-min="1"></div>
-        <label class="campo" data-si="contacto.usuarios_tablero:otro"><span class="etq">¿Quién más?<span class="req" aria-hidden="true">*</span></span>
-          <input type="text" data-k="contacto.usuarios_tablero_otro" required maxlength="200"></label>
+        <legend>¿Quién usará el tablero?</legend>
+        <div class="opciones col2" data-grupo="contacto.usuarios_tablero" data-opc="usuarios_tablero" data-tipo="checkbox"></div>
+        <label class="campo" data-si="contacto.usuarios_tablero:otro"><span class="etq">¿Quién más?</span>
+          <input type="text" data-k="contacto.usuarios_tablero_otro" maxlength="200"></label>
       </fieldset>
     </section>
 
@@ -143,11 +143,11 @@
           <div class="ayuda-texto">Cada empresa puede tener sus propios bancos, créditos y sistema contable. El número de empresas y si consolidan define cuántas vistas necesita el tablero y si hay que eliminar operaciones intercompañías.</div>
         </details>
       </div>
-      <label class="campo"><span class="etq">Número de empresas a incluir en el tablero<span class="req" aria-hidden="true">*</span><span class="nota">Al escribir el número se crean las fichas para capturar cada empresa.</span></span>
-        <input type="number" data-k="empresas.numero" id="empresas-numero" min="1" max="200" step="1" required inputmode="numeric"></label>
+      <label class="campo"><span class="etq">Número de empresas a incluir en el tablero<span class="nota">Al escribir el número se crean las fichas para capturar cada empresa.</span></span>
+        <input type="number" data-k="empresas.numero" id="empresas-numero" min="1" max="200" step="1" inputmode="numeric"></label>
       <p id="empresas-aviso" class="caja caja-aviso" hidden></p>
 
-      <div data-repeat="empresas.lista" data-tpl="tpl-empresa" data-titulo="Empresa" data-min-items="1">
+      <div data-repeat="empresas.lista" data-tpl="tpl-empresa" data-titulo="Empresa">
         <div class="rep-lista"></div>
         <button type="button" class="btn btn-sec" data-add>+ Agregar empresa</button>
       </div>
@@ -162,10 +162,10 @@
         </details>
       </div>
       <div class="campos dos">
-        <label class="campo"><span class="etq">Número total de cuentas bancarias<span class="req" aria-hidden="true">*</span></span>
-          <input type="number" data-k="cuentas.numero_total" min="1" max="5000" step="1" required inputmode="numeric"></label>
-        <label class="campo"><span class="etq">Número de bancos<span class="req" aria-hidden="true">*</span></span>
-          <input type="number" data-k="cuentas.numero_bancos" min="1" max="200" step="1" required inputmode="numeric"></label>
+        <label class="campo"><span class="etq">Número total de cuentas bancarias</span>
+          <input type="number" data-k="cuentas.numero_total" min="1" max="5000" step="1" inputmode="numeric"></label>
+        <label class="campo"><span class="etq">Número de bancos</span>
+          <input type="number" data-k="cuentas.numero_bancos" min="1" max="200" step="1" inputmode="numeric"></label>
       </div>
 
       <h3>Cuentas por empresa, banco, moneda y tipo</h3>
@@ -189,23 +189,23 @@
 
       <h3>Cómo obtienen hoy la información</h3>
       <fieldset class="grupo">
-        <legend>Canal de información<span class="req" aria-hidden="true">*</span><span class="nota">Marque todos los que usan.</span></legend>
-        <div class="opciones col2" data-grupo="cuentas.canales" data-opc="canales" data-tipo="checkbox" data-min="1"></div>
+        <legend>Canal de información<span class="nota">Marque todos los que usan.</span></legend>
+        <div class="opciones col2" data-grupo="cuentas.canales" data-opc="canales" data-tipo="checkbox"></div>
       </fieldset>
       <fieldset class="grupo">
         <div class="ayuda-linea">
-          <legend>Formato del estado de cuenta<span class="req" aria-hidden="true">*</span><span class="nota">Marque todos los que reciben.</span></legend>
+          <legend>Formato del estado de cuenta<span class="nota">Marque todos los que reciben.</span></legend>
           <details class="ayuda"><summary aria-label="¿Qué son estos formatos?">?</summary>
             <div class="ayuda-texto">TXT posicional: cada dato ocupa columnas fijas. MT940 es el formato SWIFT de estado de cuenta; CAMT.053 es su equivalente en XML (ISO 20022); BAI2 es común en bancos de EE. UU. Si no sabe el nombre, marque “Otro” y descríbalo (por ejemplo, “TXT separado por pipes”).</div>
           </details>
         </div>
-        <div class="opciones col2" data-grupo="cuentas.formatos" data-opc="formatos" data-tipo="checkbox" data-min="1"></div>
-        <label class="campo" data-si="cuentas.formatos:otro"><span class="etq">¿Qué otro formato?<span class="req" aria-hidden="true">*</span></span>
-          <input type="text" data-k="cuentas.formatos_otro" required maxlength="200"></label>
+        <div class="opciones col2" data-grupo="cuentas.formatos" data-opc="formatos" data-tipo="checkbox"></div>
+        <label class="campo" data-si="cuentas.formatos:otro"><span class="etq">¿Qué otro formato?</span>
+          <input type="text" data-k="cuentas.formatos_otro" maxlength="200"></label>
       </fieldset>
       <fieldset class="grupo">
-        <legend>Frecuencia con que descargan hoy los estados de cuenta<span class="req" aria-hidden="true">*</span></legend>
-        <div class="opciones linea" data-grupo="cuentas.frecuencia" data-opc="frecuencia_descarga" data-tipo="checkbox" data-min="1"></div>
+        <legend>Frecuencia con que descargan hoy los estados de cuenta</legend>
+        <div class="opciones linea" data-grupo="cuentas.frecuencia" data-opc="frecuencia_descarga" data-tipo="checkbox"></div>
       </fieldset>
     </section>
 
@@ -218,42 +218,42 @@
         </details>
       </div>
       <fieldset class="grupo">
-        <legend>¿Tienen host to host contratado con algún banco?<span class="req" aria-hidden="true">*</span></legend>
-        <div class="opciones linea" data-grupo="h2h.tiene" data-opc="si_no_nose" data-tipo="radio" data-min="1"></div>
+        <legend>¿Tienen host to host contratado con algún banco?</legend>
+        <div class="opciones linea" data-grupo="h2h.tiene" data-opc="si_no_nose" data-tipo="radio"></div>
       </fieldset>
 
       <div data-si="h2h.tiene:si">
         <fieldset class="grupo">
-          <legend>¿Con qué bancos?<span class="req" aria-hidden="true">*</span><span class="nota">La lista sale de los bancos que capturó en el paso 3.</span></legend>
+          <legend>¿Con qué bancos?<span class="nota">La lista sale de los bancos que capturó en el paso 3.</span></legend>
           <div class="opciones col2" data-grupo="h2h.bancos" data-dyn="bancos" data-tipo="checkbox"></div>
           <label class="campo"><span class="etq">Otros bancos con H2H (no capturados en el paso 3)</span>
             <input type="text" data-k="h2h.bancos_otros" maxlength="300" list="lista-bancos"></label>
         </fieldset>
         <fieldset class="grupo">
-          <legend>Protocolo<span class="req" aria-hidden="true">*</span></legend>
-          <div class="opciones linea" data-grupo="h2h.protocolo" data-opc="protocolo" data-tipo="radio" data-min="1"></div>
-          <label class="campo" data-si="h2h.protocolo:otro"><span class="etq">¿Cuál protocolo?<span class="req" aria-hidden="true">*</span></span>
-            <input type="text" data-k="h2h.protocolo_otro" required maxlength="120"></label>
+          <legend>Protocolo</legend>
+          <div class="opciones linea" data-grupo="h2h.protocolo" data-opc="protocolo" data-tipo="radio"></div>
+          <label class="campo" data-si="h2h.protocolo:otro"><span class="etq">¿Cuál protocolo?</span>
+            <input type="text" data-k="h2h.protocolo_otro" maxlength="120"></label>
         </fieldset>
         <fieldset class="grupo">
-          <legend>¿Quién lo administra?<span class="req" aria-hidden="true">*</span></legend>
-          <div class="opciones linea" data-grupo="h2h.administra" data-opc="administra_h2h" data-tipo="checkbox" data-min="1"></div>
+          <legend>¿Quién lo administra?</legend>
+          <div class="opciones linea" data-grupo="h2h.administra" data-opc="administra_h2h" data-tipo="checkbox"></div>
         </fieldset>
         <fieldset class="grupo">
           <legend>Archivos que entrega el banco</legend>
           <div class="opciones col2" data-grupo="h2h.recibe" data-opc="h2h_recibe" data-tipo="checkbox"></div>
-          <label class="campo" data-si="h2h.recibe:otro"><span class="etq">¿Qué otros archivos entrega el banco?<span class="req" aria-hidden="true">*</span></span>
-            <input type="text" data-k="h2h.recibe_otro" required maxlength="200"></label>
+          <label class="campo" data-si="h2h.recibe:otro"><span class="etq">¿Qué otros archivos entrega el banco?</span>
+            <input type="text" data-k="h2h.recibe_otro" maxlength="200"></label>
         </fieldset>
         <fieldset class="grupo">
           <legend>Archivos que envía la empresa al banco</legend>
           <div class="opciones col2" data-grupo="h2h.envia" data-opc="h2h_envia" data-tipo="checkbox"></div>
-          <label class="campo" data-si="h2h.envia:otro"><span class="etq">¿Qué otros archivos envía la empresa?<span class="req" aria-hidden="true">*</span></span>
-            <input type="text" data-k="h2h.envia_otro" required maxlength="200"></label>
+          <label class="campo" data-si="h2h.envia:otro"><span class="etq">¿Qué otros archivos envía la empresa?</span>
+            <input type="text" data-k="h2h.envia_otro" maxlength="200"></label>
         </fieldset>
         <fieldset class="grupo">
-          <legend>¿Cuentan con los layouts documentados?<span class="req" aria-hidden="true">*</span></legend>
-          <div class="opciones linea" data-grupo="h2h.layouts_documentados" data-opc="si_no" data-tipo="radio" data-min="1"></div>
+          <legend>¿Cuentan con los layouts documentados?</legend>
+          <div class="opciones linea" data-grupo="h2h.layouts_documentados" data-opc="si_no" data-tipo="radio"></div>
         </fieldset>
         <div class="caja caja-aviso">
           <p><strong>Solo layouts o ejemplos anonimizados.</strong> El archivo no debe contener nombres de clientes o proveedores, números de cuenta (ni completos ni parciales), saldos ni montos reales. Tipos permitidos: .txt, .csv, .xlsx, .xls, .xml, .pdf, .zip.</p>
@@ -272,16 +272,16 @@
         </details>
       </div>
       <fieldset class="grupo">
-        <legend>Monedas que manejan<span class="req" aria-hidden="true">*</span></legend>
-        <div class="opciones linea" data-grupo="monedas.lista" data-opc="monedas_multi" data-tipo="checkbox" data-min="1"></div>
-        <label class="campo" data-si="monedas.lista:otra"><span class="etq">¿Qué otras monedas? (código ISO, ej. CAD, JPY)<span class="req" aria-hidden="true">*</span></span>
-          <input type="text" data-k="monedas.otras" required maxlength="100"></label>
+        <legend>Monedas que manejan</legend>
+        <div class="opciones linea" data-grupo="monedas.lista" data-opc="monedas_multi" data-tipo="checkbox"></div>
+        <label class="campo" data-si="monedas.lista:otra"><span class="etq">¿Qué otras monedas? (código ISO, ej. CAD, JPY)</span>
+          <input type="text" data-k="monedas.otras" maxlength="100"></label>
       </fieldset>
       <fieldset class="grupo">
-        <legend>Tipo de cambio que usan para valuar<span class="req" aria-hidden="true">*</span></legend>
-        <div class="opciones" data-grupo="monedas.tipo_cambio" data-opc="tipo_cambio" data-tipo="checkbox" data-min="1"></div>
-        <label class="campo" data-si="monedas.tipo_cambio:otro"><span class="etq">¿Cuál otro tipo de cambio?<span class="req" aria-hidden="true">*</span></span>
-          <input type="text" data-k="monedas.tipo_cambio_otro" required maxlength="200"></label>
+        <legend>Tipo de cambio que usan para valuar</legend>
+        <div class="opciones" data-grupo="monedas.tipo_cambio" data-opc="tipo_cambio" data-tipo="checkbox"></div>
+        <label class="campo" data-si="monedas.tipo_cambio:otro"><span class="etq">¿Cuál otro tipo de cambio?</span>
+          <input type="text" data-k="monedas.tipo_cambio_otro" maxlength="200"></label>
       </fieldset>
     </section>
 
@@ -295,11 +295,11 @@
       </div>
       <p class="paso-intro">Solo las condiciones de cada crédito; <strong>no capture saldos ni montos</strong>.</p>
       <fieldset class="grupo">
-        <legend>¿Tienen créditos o financiamientos vigentes?<span class="req" aria-hidden="true">*</span></legend>
-        <div class="opciones linea" data-grupo="creditos.tiene" data-opc="si_no_creditos" data-tipo="radio" data-min="1"></div>
+        <legend>¿Tienen créditos o financiamientos vigentes?</legend>
+        <div class="opciones linea" data-grupo="creditos.tiene" data-opc="si_no_creditos" data-tipo="radio"></div>
       </fieldset>
       <div data-si="creditos.tiene:si">
-        <div data-repeat="creditos.lista" data-tpl="tpl-credito" data-titulo="Crédito" data-min-items="1">
+        <div data-repeat="creditos.lista" data-tpl="tpl-credito" data-titulo="Crédito">
           <div class="rep-lista"></div>
           <button type="button" class="btn btn-sec" data-add>+ Agregar crédito</button>
         </div>
@@ -316,23 +316,23 @@
       </div>
       <p class="paso-intro">Solo las condiciones de cada cobertura; <strong>no capture nocionales ni montos</strong>.</p>
       <fieldset class="grupo">
-        <legend>¿Tienen coberturas de tasa de interés vigentes?<span class="req" aria-hidden="true">*</span></legend>
-        <div class="opciones linea" data-grupo="cob_tasa.tiene" data-opc="si_no_coberturas" data-tipo="radio" data-min="1"></div>
+        <legend>¿Tienen coberturas de tasa de interés vigentes?</legend>
+        <div class="opciones linea" data-grupo="cob_tasa.tiene" data-opc="si_no_coberturas" data-tipo="radio"></div>
       </fieldset>
       <div data-si="cob_tasa.tiene:si">
-        <div data-repeat="cob_tasa.lista" data-tpl="tpl-cob-tasa" data-titulo="Cobertura de tasa" data-min-items="1">
+        <div data-repeat="cob_tasa.lista" data-tpl="tpl-cob-tasa" data-titulo="Cobertura de tasa">
           <div class="rep-lista"></div>
           <button type="button" class="btn btn-sec" data-add>+ Agregar cobertura de tasa</button>
         </div>
         <h3>Valuación</h3>
         <fieldset class="grupo">
-          <legend>¿Quién les da la valuación a mercado?<span class="req" aria-hidden="true">*</span></legend>
-          <div class="opciones col2" data-grupo="cob_tasa.valuador" data-opc="valuador" data-tipo="checkbox" data-min="1"></div>
-          <label class="campo" data-si="cob_tasa.valuador:otro"><span class="etq">¿Quién más?<span class="req" aria-hidden="true">*</span></span>
-            <input type="text" data-k="cob_tasa.valuador_otro" required maxlength="200"></label>
+          <legend>¿Quién les da la valuación a mercado?</legend>
+          <div class="opciones col2" data-grupo="cob_tasa.valuador" data-opc="valuador" data-tipo="checkbox"></div>
+          <label class="campo" data-si="cob_tasa.valuador:otro"><span class="etq">¿Quién más?</span>
+            <input type="text" data-k="cob_tasa.valuador_otro" maxlength="200"></label>
         </fieldset>
-        <label class="campo"><span class="etq">¿Con qué frecuencia la reciben?<span class="req" aria-hidden="true">*</span></span>
-          <select data-k="cob_tasa.frecuencia_valuacion" data-opc="frecuencia_valuacion" required></select></label>
+        <label class="campo"><span class="etq">¿Con qué frecuencia la reciben?</span>
+          <select data-k="cob_tasa.frecuencia_valuacion" data-opc="frecuencia_valuacion"></select></label>
       </div>
     </section>
 
@@ -346,23 +346,23 @@
       </div>
       <p class="paso-intro">Solo las condiciones de cada cobertura; <strong>no capture nocionales ni montos</strong>.</p>
       <fieldset class="grupo">
-        <legend>¿Tienen coberturas cambiarias vigentes?<span class="req" aria-hidden="true">*</span></legend>
-        <div class="opciones linea" data-grupo="cob_fx.tiene" data-opc="si_no_coberturas" data-tipo="radio" data-min="1"></div>
+        <legend>¿Tienen coberturas cambiarias vigentes?</legend>
+        <div class="opciones linea" data-grupo="cob_fx.tiene" data-opc="si_no_coberturas" data-tipo="radio"></div>
       </fieldset>
       <div data-si="cob_fx.tiene:si">
-        <div data-repeat="cob_fx.lista" data-tpl="tpl-cob-fx" data-titulo="Cobertura cambiaria" data-min-items="1">
+        <div data-repeat="cob_fx.lista" data-tpl="tpl-cob-fx" data-titulo="Cobertura cambiaria">
           <div class="rep-lista"></div>
           <button type="button" class="btn btn-sec" data-add>+ Agregar cobertura cambiaria</button>
         </div>
       </div>
       <h3>Posición y política</h3>
       <fieldset class="grupo">
-        <legend>Posición natural del grupo en dólares<span class="req" aria-hidden="true">*</span></legend>
-        <div class="opciones" data-grupo="cob_fx.posicion_natural" data-opc="posicion_natural" data-tipo="radio" data-min="1"></div>
+        <legend>Posición natural del grupo en dólares</legend>
+        <div class="opciones" data-grupo="cob_fx.posicion_natural" data-opc="posicion_natural" data-tipo="radio"></div>
       </fieldset>
       <fieldset class="grupo">
-        <legend>¿Tienen una política de cobertura documentada?<span class="req" aria-hidden="true">*</span></legend>
-        <div class="opciones linea" data-grupo="cob_fx.politica" data-opc="si_no" data-tipo="radio" data-min="1"></div>
+        <legend>¿Tienen una política de cobertura documentada?</legend>
+        <div class="opciones linea" data-grupo="cob_fx.politica" data-opc="si_no" data-tipo="radio"></div>
       </fieldset>
     </section>
 
@@ -375,31 +375,31 @@
         </details>
       </div>
       <fieldset class="grupo">
-        <legend>¿Hay traspasos u operaciones entre empresas del grupo?<span class="req" aria-hidden="true">*</span></legend>
-        <div class="opciones linea" data-grupo="ic.tiene" data-opc="si_no" data-tipo="radio" data-min="1"></div>
+        <legend>¿Hay traspasos u operaciones entre empresas del grupo?</legend>
+        <div class="opciones linea" data-grupo="ic.tiene" data-opc="si_no" data-tipo="radio"></div>
       </fieldset>
       <div data-si="ic.tiene:si">
         <fieldset class="grupo">
-          <legend>Conceptos de traspaso<span class="req" aria-hidden="true">*</span></legend>
-          <div class="opciones col2" data-grupo="ic.conceptos" data-opc="conceptos_ic" data-tipo="checkbox" data-min="1"></div>
-          <label class="campo" data-si="ic.conceptos:otro"><span class="etq">¿Qué otros conceptos?<span class="req" aria-hidden="true">*</span></span>
-            <input type="text" data-k="ic.conceptos_otro" required maxlength="200"></label>
+          <legend>Conceptos de traspaso</legend>
+          <div class="opciones col2" data-grupo="ic.conceptos" data-opc="conceptos_ic" data-tipo="checkbox"></div>
+          <label class="campo" data-si="ic.conceptos:otro"><span class="etq">¿Qué otros conceptos?</span>
+            <input type="text" data-k="ic.conceptos_otro" maxlength="200"></label>
         </fieldset>
         <div class="campos dos">
-          <label class="campo"><span class="etq">Frecuencia<span class="req" aria-hidden="true">*</span></span>
-            <select data-k="ic.frecuencia" data-opc="frecuencia_ic" required></select></label>
+          <label class="campo"><span class="etq">Frecuencia</span>
+            <select data-k="ic.frecuencia" data-opc="frecuencia_ic"></select></label>
           <label class="campo"><span class="etq">Número aproximado de operaciones al mes</span>
             <input type="number" data-k="ic.operaciones_mes" min="0" step="1" inputmode="numeric"></label>
         </div>
         <fieldset class="grupo">
-          <legend>¿Cómo se identifican en el estado de cuenta?<span class="req" aria-hidden="true">*</span></legend>
-          <div class="opciones col2" data-grupo="ic.identificacion" data-opc="identificacion_ic" data-tipo="checkbox" data-min="1"></div>
+          <legend>¿Cómo se identifican en el estado de cuenta?</legend>
+          <div class="opciones col2" data-grupo="ic.identificacion" data-opc="identificacion_ic" data-tipo="checkbox"></div>
         </fieldset>
         <fieldset class="grupo">
-          <legend>¿Generan intereses intercompañía?<span class="req" aria-hidden="true">*</span></legend>
-          <div class="opciones linea" data-grupo="ic.intereses" data-opc="si_no" data-tipo="radio" data-min="1"></div>
-          <label class="campo" data-si="ic.intereses:si"><span class="etq">Tasa usada (nominal anual)<span class="req" aria-hidden="true">*</span><span class="nota">Ej. “TIIE 28 + 1.50 pp” o “11.00 % fija nominal anual”.</span></span>
-            <input type="text" data-k="ic.tasa" required maxlength="150"></label>
+          <legend>¿Generan intereses intercompañía?</legend>
+          <div class="opciones linea" data-grupo="ic.intereses" data-opc="si_no" data-tipo="radio"></div>
+          <label class="campo" data-si="ic.intereses:si"><span class="etq">Tasa usada (nominal anual)<span class="nota">Ej. “TIIE 28 + 1.50 pp” o “11.00 % fija nominal anual”.</span></span>
+            <input type="text" data-k="ic.tasa" maxlength="150"></label>
         </fieldset>
       </div>
     </section>
@@ -413,20 +413,20 @@
         </details>
       </div>
       <fieldset class="grupo">
-        <legend>Tipos de pago que realizan y número aproximado de pagos al mes<span class="req" aria-hidden="true">*</span></legend>
-        <div class="opciones" data-grupo="pagos.tipos" data-opc="tipos_pago" data-tipo="conteo" data-conteo="pagos.volumen" data-min="1"></div>
-        <label class="campo" data-si="pagos.tipos:otro"><span class="etq">¿Qué otros pagos?<span class="req" aria-hidden="true">*</span></span>
-          <input type="text" data-k="pagos.tipos_otro" required maxlength="200"></label>
+        <legend>Tipos de pago que realizan y número aproximado de pagos al mes</legend>
+        <div class="opciones" data-grupo="pagos.tipos" data-opc="tipos_pago" data-tipo="conteo" data-conteo="pagos.volumen"></div>
+        <label class="campo" data-si="pagos.tipos:otro"><span class="etq">¿Qué otros pagos?</span>
+          <input type="text" data-k="pagos.tipos_otro" maxlength="200"></label>
       </fieldset>
       <fieldset class="grupo">
-        <legend>¿Usan dispersión masiva por layout?<span class="req" aria-hidden="true">*</span></legend>
-        <div class="opciones linea" data-grupo="pagos.dispersion_masiva" data-opc="dispersion" data-tipo="radio" data-min="1"></div>
+        <legend>¿Usan dispersión masiva por layout?</legend>
+        <div class="opciones linea" data-grupo="pagos.dispersion_masiva" data-opc="dispersion" data-tipo="radio"></div>
       </fieldset>
       <fieldset class="grupo">
-        <legend>¿Cómo reciben la cobranza?<span class="req" aria-hidden="true">*</span></legend>
-        <div class="opciones col2" data-grupo="pagos.cobranza" data-opc="cobranza" data-tipo="checkbox" data-min="1"></div>
-        <label class="campo" data-si="pagos.cobranza:otro"><span class="etq">¿Qué otra forma de cobranza?<span class="req" aria-hidden="true">*</span></span>
-          <input type="text" data-k="pagos.cobranza_otro" required maxlength="200"></label>
+        <legend>¿Cómo reciben la cobranza?</legend>
+        <div class="opciones col2" data-grupo="pagos.cobranza" data-opc="cobranza" data-tipo="checkbox"></div>
+        <label class="campo" data-si="pagos.cobranza:otro"><span class="etq">¿Qué otra forma de cobranza?</span>
+          <input type="text" data-k="pagos.cobranza_otro" maxlength="200"></label>
       </fieldset>
     </section>
 
@@ -439,46 +439,46 @@
         </details>
       </div>
       <fieldset class="grupo">
-        <legend>ERP o sistema contable que usan<span class="req" aria-hidden="true">*</span><span class="nota">Marque todos los que se usan en el grupo.</span></legend>
-        <div class="opciones col2" data-grupo="sistemas.erp" data-opc="erps" data-tipo="checkbox" data-min="1"></div>
-        <label class="campo" data-si="sistemas.erp:otro"><span class="etq">¿Cuál otro sistema?<span class="req" aria-hidden="true">*</span></span>
-          <input type="text" data-k="sistemas.erp_otro" required maxlength="200"></label>
+        <legend>ERP o sistema contable que usan<span class="nota">Marque todos los que se usan en el grupo.</span></legend>
+        <div class="opciones col2" data-grupo="sistemas.erp" data-opc="erps" data-tipo="checkbox"></div>
+        <label class="campo" data-si="sistemas.erp:otro"><span class="etq">¿Cuál otro sistema?</span>
+          <input type="text" data-k="sistemas.erp_otro" maxlength="200"></label>
       </fieldset>
       <fieldset class="grupo">
-        <legend>¿El ERP tiene módulo de tesorería en uso?<span class="req" aria-hidden="true">*</span></legend>
-        <div class="opciones linea" data-grupo="sistemas.modulo_tesoreria" data-opc="si_no_nose" data-tipo="radio" data-min="1"></div>
+        <legend>¿El ERP tiene módulo de tesorería en uso?</legend>
+        <div class="opciones linea" data-grupo="sistemas.modulo_tesoreria" data-opc="si_no_nose" data-tipo="radio"></div>
       </fieldset>
       <fieldset class="grupo">
-        <legend>¿Cómo hacen hoy la conciliación bancaria?<span class="req" aria-hidden="true">*</span></legend>
-        <div class="opciones col2" data-grupo="sistemas.conciliacion" data-opc="conciliacion" data-tipo="checkbox" data-min="1"></div>
-        <label class="campo" data-si="sistemas.conciliacion:software"><span class="etq">¿Qué software especializado?<span class="req" aria-hidden="true">*</span></span>
-          <input type="text" data-k="sistemas.conciliacion_software" required maxlength="200"></label>
+        <legend>¿Cómo hacen hoy la conciliación bancaria?</legend>
+        <div class="opciones col2" data-grupo="sistemas.conciliacion" data-opc="conciliacion" data-tipo="checkbox"></div>
+        <label class="campo" data-si="sistemas.conciliacion:software"><span class="etq">¿Qué software especializado?</span>
+          <input type="text" data-k="sistemas.conciliacion_software" maxlength="200"></label>
       </fieldset>
       <label class="campo"><span class="etq">Reportes de tesorería que preparan hoy<span class="nota">Ej. posición diaria de bancos, flujo semanal, reporte de deuda mensual al consejo.</span></span>
         <textarea data-k="sistemas.reportes" maxlength="2000"></textarea></label>
 
       <h3>Microsoft 365 y Power BI</h3>
       <fieldset class="grupo">
-        <legend>¿Usan Microsoft 365?<span class="req" aria-hidden="true">*</span></legend>
-        <div class="opciones linea" data-grupo="sistemas.m365" data-opc="si_no_nose" data-tipo="radio" data-min="1"></div>
+        <legend>¿Usan Microsoft 365?</legend>
+        <div class="opciones linea" data-grupo="sistemas.m365" data-opc="si_no_nose" data-tipo="radio"></div>
       </fieldset>
       <fieldset class="grupo">
         <div class="ayuda-linea">
-          <legend>Licencias de Power BI<span class="req" aria-hidden="true">*</span></legend>
+          <legend>Licencias de Power BI</legend>
           <details class="ayuda"><summary aria-label="¿Qué tipo de licencia tengo?">?</summary>
             <div class="ayuda-texto">Pro y Premium por usuario se asignan a cada persona. Fabric o capacidad es un contrato de la empresa que permite compartir reportes con más usuarios. Si no lo sabe, su área de TI puede consultarlo en el centro de administración de Microsoft 365.</div>
           </details>
         </div>
-        <div class="opciones col2" data-grupo="sistemas.powerbi" data-opc="powerbi" data-tipo="radio" data-min="1"></div>
+        <div class="opciones col2" data-grupo="sistemas.powerbi" data-opc="powerbi" data-tipo="radio"></div>
       </fieldset>
       <fieldset class="grupo">
         <div class="ayuda-linea">
-          <legend>¿Tienen instalado un gateway de datos de Power BI?<span class="req" aria-hidden="true">*</span></legend>
+          <legend>¿Tienen instalado un gateway de datos de Power BI?</legend>
           <details class="ayuda"><summary aria-label="¿Qué es el gateway?">?</summary>
             <div class="ayuda-texto">Es un programa que se instala en un servidor de la empresa para que Power BI en línea pueda leer datos que están dentro de su red (por ejemplo, una base de datos local).</div>
           </details>
         </div>
-        <div class="opciones linea" data-grupo="sistemas.gateway" data-opc="si_no_nose" data-tipo="radio" data-min="1"></div>
+        <div class="opciones linea" data-grupo="sistemas.gateway" data-opc="si_no_nose" data-tipo="radio"></div>
       </fieldset>
     </section>
 
@@ -491,31 +491,31 @@
         </details>
       </div>
       <fieldset class="grupo">
-        <legend>Preferencia de alojamiento<span class="req" aria-hidden="true">*</span></legend>
-        <div class="opciones" data-grupo="infra.alojamiento" data-opc="alojamiento" data-tipo="radio" data-min="1"></div>
+        <legend>Preferencia de alojamiento</legend>
+        <div class="opciones" data-grupo="infra.alojamiento" data-opc="alojamiento" data-tipo="radio"></div>
       </fieldset>
       <fieldset class="grupo" data-si="infra.alojamiento:nube|indistinto">
         <legend>Nube que usan o prefieren</legend>
         <div class="opciones linea" data-grupo="infra.nubes" data-opc="nubes" data-tipo="checkbox"></div>
       </fieldset>
       <fieldset class="grupo">
-        <legend>¿Sus políticas permiten que la información financiera se guarde fuera de la red de la empresa?<span class="req" aria-hidden="true">*</span></legend>
-        <div class="opciones linea" data-grupo="infra.permite_salida" data-opc="si_no_nose" data-tipo="radio" data-min="1"></div>
+        <legend>¿Sus políticas permiten que la información financiera se guarde fuera de la red de la empresa?</legend>
+        <div class="opciones linea" data-grupo="infra.permite_salida" data-opc="si_no_nose" data-tipo="radio"></div>
       </fieldset>
       <label class="campo"><span class="etq">Políticas de TI o restricciones a considerar<span class="nota">Ej. acceso solo por VPN, la información no puede salir de la empresa, aprobación del área de seguridad.</span></span>
         <textarea data-k="infra.restricciones" maxlength="2000"></textarea></label>
       <fieldset class="grupo">
-        <legend>Frecuencia de actualización deseada del tablero<span class="req" aria-hidden="true">*</span></legend>
-        <div class="opciones linea" data-grupo="infra.frecuencia" data-opc="frecuencia_tablero" data-tipo="radio" data-min="1"></div>
+        <legend>Frecuencia de actualización deseada del tablero</legend>
+        <div class="opciones linea" data-grupo="infra.frecuencia" data-opc="frecuencia_tablero" data-tipo="radio"></div>
       </fieldset>
       <fieldset class="grupo">
-        <legend>Indicadores que quieren ver<span class="req" aria-hidden="true">*</span></legend>
-        <div class="opciones" data-grupo="infra.indicadores" data-opc="indicadores" data-tipo="checkbox" data-min="1"></div>
-        <label class="campo" data-si="infra.indicadores:otro"><span class="etq">¿Qué otros indicadores?<span class="req" aria-hidden="true">*</span></span>
-          <input type="text" data-k="infra.indicadores_otro" required maxlength="300"></label>
+        <legend>Indicadores que quieren ver</legend>
+        <div class="opciones" data-grupo="infra.indicadores" data-opc="indicadores" data-tipo="checkbox"></div>
+        <label class="campo" data-si="infra.indicadores:otro"><span class="etq">¿Qué otros indicadores?</span>
+          <input type="text" data-k="infra.indicadores_otro" maxlength="300"></label>
       </fieldset>
-      <label class="campo"><span class="etq">Número de usuarios del tablero<span class="req" aria-hidden="true">*</span></span>
-        <input type="number" data-k="infra.usuarios" min="1" max="10000" step="1" required inputmode="numeric"></label>
+      <label class="campo"><span class="etq">Número de usuarios del tablero</span>
+        <input type="number" data-k="infra.usuarios" min="1" max="10000" step="1" inputmode="numeric"></label>
     </section>
 
     <!-- ===================================================== PASO 13 -->
@@ -609,39 +609,39 @@
 
 <template id="tpl-empresa">
   <div class="campos dos">
-    <label class="campo ancho"><span class="etq">Razón social<span class="req" aria-hidden="true">*</span></span>
-      <input type="text" data-k="razon_social" required maxlength="200"></label>
+    <label class="campo ancho"><span class="etq">Razón social</span>
+      <input type="text" data-k="razon_social" maxlength="200"></label>
     <label class="campo"><span class="etq">RFC (opcional)</span>
       <input type="text" data-k="rfc" maxlength="13" pattern="[A-Za-zÑñ&amp;]{3,4}[0-9]{6}[A-Za-z0-9]{3}" data-mensaje="El RFC debe tener 12 caracteres (persona moral) o 13 (persona física)." autocapitalize="characters"></label>
-    <label class="campo"><span class="etq">Moneda funcional<span class="req" aria-hidden="true">*</span></span>
-      <select data-k="moneda_funcional" data-opc="monedas" required></select></label>
-    <label class="campo" data-si="moneda_funcional:otra"><span class="etq">¿Cuál moneda?<span class="req" aria-hidden="true">*</span></span>
-      <input type="text" data-k="moneda_funcional_otra" required maxlength="10"></label>
+    <label class="campo"><span class="etq">Moneda funcional</span>
+      <select data-k="moneda_funcional" data-opc="monedas"></select></label>
+    <label class="campo" data-si="moneda_funcional:otra"><span class="etq">¿Cuál moneda?</span>
+      <input type="text" data-k="moneda_funcional_otra" maxlength="10"></label>
     <fieldset class="grupo">
-      <legend>¿Consolida en el grupo?<span class="req" aria-hidden="true">*</span></legend>
-      <div class="opciones linea" data-grupo="consolida" data-opc="si_no" data-tipo="radio" data-min="1"></div>
+      <legend>¿Consolida en el grupo?</legend>
+      <div class="opciones linea" data-grupo="consolida" data-opc="si_no" data-tipo="radio"></div>
     </fieldset>
-    <label class="campo"><span class="etq">ERP que usa<span class="req" aria-hidden="true">*</span></span>
-      <select data-k="erp" data-opc="erps" required></select></label>
-    <label class="campo" data-si="erp:otro"><span class="etq">¿Cuál ERP?<span class="req" aria-hidden="true">*</span></span>
-      <input type="text" data-k="erp_otro" required maxlength="120"></label>
+    <label class="campo"><span class="etq">ERP que usa</span>
+      <select data-k="erp" data-opc="erps"></select></label>
+    <label class="campo" data-si="erp:otro"><span class="etq">¿Cuál ERP?</span>
+      <input type="text" data-k="erp_otro" maxlength="120"></label>
   </div>
 </template>
 
 <template id="tpl-cuenta">
   <div class="campos dos">
-    <label class="campo"><span class="etq">Empresa<span class="req" aria-hidden="true">*</span></span>
-      <select data-k="empresa" data-dyn="empresas" required></select></label>
-    <label class="campo"><span class="etq">Banco<span class="req" aria-hidden="true">*</span></span>
-      <input type="text" data-k="banco" list="lista-bancos" required maxlength="100"></label>
-    <label class="campo"><span class="etq">Moneda<span class="req" aria-hidden="true">*</span></span>
-      <select data-k="moneda" data-opc="monedas" required></select></label>
-    <label class="campo" data-si="moneda:otra"><span class="etq">¿Cuál moneda?<span class="req" aria-hidden="true">*</span></span>
-      <input type="text" data-k="moneda_otra" required maxlength="10"></label>
-    <label class="campo"><span class="etq">Número de cuentas con estas características<span class="req" aria-hidden="true">*</span><span class="nota">Cuántas cuentas, no su número.</span></span>
-      <input type="number" data-k="cantidad" value="1" min="1" max="5000" step="1" required inputmode="numeric"></label>
-    <label class="campo"><span class="etq">Tipo de cuenta<span class="req" aria-hidden="true">*</span></span>
-      <select data-k="tipo" data-opc="tipos_cuenta" required></select></label>
+    <label class="campo"><span class="etq">Empresa</span>
+      <select data-k="empresa" data-dyn="empresas"></select></label>
+    <label class="campo"><span class="etq">Banco</span>
+      <input type="text" data-k="banco" list="lista-bancos" maxlength="100"></label>
+    <label class="campo"><span class="etq">Moneda</span>
+      <select data-k="moneda" data-opc="monedas"></select></label>
+    <label class="campo" data-si="moneda:otra"><span class="etq">¿Cuál moneda?</span>
+      <input type="text" data-k="moneda_otra" maxlength="10"></label>
+    <label class="campo"><span class="etq">Número de cuentas con estas características<span class="nota">Cuántas cuentas, no su número.</span></span>
+      <input type="number" data-k="cantidad" value="1" min="1" max="5000" step="1" inputmode="numeric"></label>
+    <label class="campo"><span class="etq">Tipo de cuenta</span>
+      <select data-k="tipo" data-opc="tipos_cuenta"></select></label>
     <label class="campo"><span class="etq">Uso principal<span class="nota">Ej. pago a proveedores, cobranza, nómina.</span></span>
       <input type="text" data-k="uso" maxlength="150"></label>
     <label class="campo"><span class="etq">Movimientos aproximados al mes<span class="nota">Total de estas cuentas.</span></span>
@@ -651,34 +651,34 @@
 
 <template id="tpl-credito">
   <div class="campos dos">
-    <label class="campo"><span class="etq">Tipo de crédito<span class="req" aria-hidden="true">*</span></span>
-      <select data-k="tipo" data-opc="tipos_credito" required></select></label>
-    <label class="campo" data-si="tipo:otro"><span class="etq">¿Qué tipo?<span class="req" aria-hidden="true">*</span></span>
-      <input type="text" data-k="tipo_otro" required maxlength="120"></label>
-    <label class="campo"><span class="etq">Empresa acreditada<span class="req" aria-hidden="true">*</span></span>
-      <select data-k="empresa" data-dyn="empresas" required></select></label>
-    <label class="campo"><span class="etq">Banco o acreedor<span class="req" aria-hidden="true">*</span></span>
-      <input type="text" data-k="banco" list="lista-bancos" required maxlength="100"></label>
-    <label class="campo"><span class="etq">Moneda<span class="req" aria-hidden="true">*</span></span>
-      <select data-k="moneda" data-opc="monedas" required></select></label>
-    <label class="campo" data-si="moneda:otra"><span class="etq">¿Cuál moneda?<span class="req" aria-hidden="true">*</span></span>
-      <input type="text" data-k="moneda_otra" required maxlength="10"></label>
+    <label class="campo"><span class="etq">Tipo de crédito</span>
+      <select data-k="tipo" data-opc="tipos_credito"></select></label>
+    <label class="campo" data-si="tipo:otro"><span class="etq">¿Qué tipo?</span>
+      <input type="text" data-k="tipo_otro" maxlength="120"></label>
+    <label class="campo"><span class="etq">Empresa acreditada</span>
+      <select data-k="empresa" data-dyn="empresas"></select></label>
+    <label class="campo"><span class="etq">Banco o acreedor</span>
+      <input type="text" data-k="banco" list="lista-bancos" maxlength="100"></label>
+    <label class="campo"><span class="etq">Moneda</span>
+      <select data-k="moneda" data-opc="monedas"></select></label>
+    <label class="campo" data-si="moneda:otra"><span class="etq">¿Cuál moneda?</span>
+      <input type="text" data-k="moneda_otra" maxlength="10"></label>
     <label class="campo"><span class="etq">Fecha de vencimiento</span>
       <input type="date" data-k="vencimiento"></label>
   </div>
 
   <h4>Tasa de interés (nominal anual)</h4>
   <div class="campos dos">
-    <label class="campo"><span class="etq">Tasa base<span class="req" aria-hidden="true">*</span></span>
-      <select data-k="tasa_base" data-opc="tasas_base" required></select></label>
-    <label class="campo" data-si="tasa_base:otra"><span class="etq">¿Qué tasa base?<span class="req" aria-hidden="true">*</span></span>
-      <input type="text" data-k="tasa_base_otra" required maxlength="80"></label>
+    <label class="campo"><span class="etq">Tasa base</span>
+      <select data-k="tasa_base" data-opc="tasas_base"></select></label>
+    <label class="campo" data-si="tasa_base:otra"><span class="etq">¿Qué tasa base?</span>
+      <input type="text" data-k="tasa_base_otra" maxlength="80"></label>
     <label class="campo" data-si="tasa_base:tiie28|tiie91|tiie_fondeo|term_sofr|otra"><span class="etq">Valor vigente de la tasa base (% nominal anual)<span class="nota">El que aplicó en el último periodo de intereses. Opcional.</span></span>
       <input type="number" data-k="tasa_base_valor" min="0" max="100" step="0.0001" inputmode="decimal" data-tasa></label>
-    <label class="campo" data-si="tasa_base:tiie28|tiie91|tiie_fondeo|term_sofr|otra"><span class="etq">Sobretasa (puntos porcentuales)<span class="req" aria-hidden="true">*</span><span class="nota">Ej. 2.50 para TIIE + 2.50 pp.</span></span>
-      <input type="number" data-k="sobretasa_pp" min="-20" max="50" step="0.0001" required inputmode="decimal" data-tasa></label>
-    <label class="campo" data-si="tasa_base:fija"><span class="etq">Tasa fija (% nominal anual)<span class="req" aria-hidden="true">*</span></span>
-      <input type="number" data-k="tasa_fija" min="0" max="100" step="0.0001" required inputmode="decimal" data-tasa></label>
+    <label class="campo" data-si="tasa_base:tiie28|tiie91|tiie_fondeo|term_sofr|otra"><span class="etq">Sobretasa (puntos porcentuales)<span class="nota">Ej. 2.50 para TIIE + 2.50 pp.</span></span>
+      <input type="number" data-k="sobretasa_pp" min="-20" max="50" step="0.0001" inputmode="decimal" data-tasa></label>
+    <label class="campo" data-si="tasa_base:fija"><span class="etq">Tasa fija (% nominal anual)</span>
+      <input type="number" data-k="tasa_fija" min="0" max="100" step="0.0001" inputmode="decimal" data-tasa></label>
     <label class="campo"><span class="etq">Tasa nominal anual resultante (%)<span class="nota">Se calcula sola: tasa fija, o tasa base vigente + sobretasa.</span></span>
       <input type="text" data-k="tasa_nominal" readonly tabindex="-1"></label>
   </div>
@@ -686,19 +686,19 @@
 
   <h4>Pagos y amortización</h4>
   <div class="campos dos">
-    <label class="campo"><span class="etq">Periodicidad de pago de intereses<span class="req" aria-hidden="true">*</span></span>
-      <select data-k="periodicidad_intereses" data-opc="periodicidad" required></select></label>
-    <label class="campo"><span class="etq">Periodicidad de pago de capital<span class="req" aria-hidden="true">*</span></span>
-      <select data-k="periodicidad_capital" data-opc="periodicidad" required></select></label>
-    <label class="campo"><span class="etq">Tipo de amortización<span class="req" aria-hidden="true">*</span></span>
-      <select data-k="amortizacion" data-opc="amortizacion" required></select></label>
+    <label class="campo"><span class="etq">Periodicidad de pago de intereses</span>
+      <select data-k="periodicidad_intereses" data-opc="periodicidad"></select></label>
+    <label class="campo"><span class="etq">Periodicidad de pago de capital</span>
+      <select data-k="periodicidad_capital" data-opc="periodicidad"></select></label>
+    <label class="campo"><span class="etq">Tipo de amortización</span>
+      <select data-k="amortizacion" data-opc="amortizacion"></select></label>
     <fieldset class="grupo">
-      <legend>¿Tienen la tabla de amortización?<span class="req" aria-hidden="true">*</span></legend>
-      <div class="opciones" data-grupo="tabla_amortizacion" data-opc="tabla_amort" data-tipo="radio" data-min="1"></div>
+      <legend>¿Tienen la tabla de amortización?</legend>
+      <div class="opciones" data-grupo="tabla_amortizacion" data-opc="tabla_amort" data-tipo="radio"></div>
     </fieldset>
     <fieldset class="grupo ancho" data-si="tabla_amortizacion:si">
-      <legend>¿En qué formato?<span class="req" aria-hidden="true">*</span></legend>
-      <div class="opciones linea" data-grupo="tabla_formato" data-opc="formato_tabla" data-tipo="checkbox" data-min="1"></div>
+      <legend>¿En qué formato?</legend>
+      <div class="opciones linea" data-grupo="tabla_formato" data-opc="formato_tabla" data-tipo="checkbox"></div>
     </fieldset>
     <label class="campo ancho"><span class="etq">Garantías y covenants<span class="nota">Ej. garantía hipotecaria; razón deuda/EBITDA máxima de 3.0x.</span></span>
       <textarea data-k="garantias_covenants" maxlength="2000"></textarea></label>
@@ -707,16 +707,16 @@
 
 <template id="tpl-cob-tasa">
   <div class="campos dos">
-    <label class="campo"><span class="etq">Instrumento<span class="req" aria-hidden="true">*</span></span>
-      <select data-k="instrumento" data-opc="instr_tasa" required></select></label>
-    <label class="campo" data-si="instrumento:otro"><span class="etq">¿Qué instrumento?<span class="req" aria-hidden="true">*</span></span>
-      <input type="text" data-k="instrumento_otro" required maxlength="120"></label>
-    <label class="campo"><span class="etq">Contraparte<span class="req" aria-hidden="true">*</span></span>
-      <input type="text" data-k="contraparte" list="lista-bancos" required maxlength="100"></label>
-    <label class="campo"><span class="etq">Moneda<span class="req" aria-hidden="true">*</span></span>
-      <select data-k="moneda" data-opc="monedas" required></select></label>
-    <label class="campo" data-si="moneda:otra"><span class="etq">¿Cuál moneda?<span class="req" aria-hidden="true">*</span></span>
-      <input type="text" data-k="moneda_otra" required maxlength="10"></label>
+    <label class="campo"><span class="etq">Instrumento</span>
+      <select data-k="instrumento" data-opc="instr_tasa"></select></label>
+    <label class="campo" data-si="instrumento:otro"><span class="etq">¿Qué instrumento?</span>
+      <input type="text" data-k="instrumento_otro" maxlength="120"></label>
+    <label class="campo"><span class="etq">Contraparte</span>
+      <input type="text" data-k="contraparte" list="lista-bancos" maxlength="100"></label>
+    <label class="campo"><span class="etq">Moneda</span>
+      <select data-k="moneda" data-opc="monedas"></select></label>
+    <label class="campo" data-si="moneda:otra"><span class="etq">¿Cuál moneda?</span>
+      <input type="text" data-k="moneda_otra" maxlength="10"></label>
     <label class="campo"><span class="etq">Fecha de vencimiento</span>
       <input type="date" data-k="vencimiento"></label>
     <label class="campo"><span class="etq">Crédito que cubre<span class="nota">La lista sale de los créditos del paso 6.</span></span>
@@ -730,16 +730,16 @@
 
 <template id="tpl-cob-fx">
   <div class="campos dos">
-    <label class="campo"><span class="etq">Instrumento<span class="req" aria-hidden="true">*</span></span>
-      <select data-k="instrumento" data-opc="instr_fx" required></select></label>
-    <label class="campo" data-si="instrumento:otro"><span class="etq">¿Qué instrumento?<span class="req" aria-hidden="true">*</span></span>
-      <input type="text" data-k="instrumento_otro" required maxlength="120"></label>
-    <label class="campo"><span class="etq">Contraparte<span class="req" aria-hidden="true">*</span></span>
-      <input type="text" data-k="contraparte" list="lista-bancos" required maxlength="100"></label>
-    <label class="campo"><span class="etq">Moneda<span class="req" aria-hidden="true">*</span></span>
-      <select data-k="moneda" data-opc="monedas" required></select></label>
-    <label class="campo" data-si="moneda:otra"><span class="etq">¿Cuál moneda?<span class="req" aria-hidden="true">*</span></span>
-      <input type="text" data-k="moneda_otra" required maxlength="10"></label>
+    <label class="campo"><span class="etq">Instrumento</span>
+      <select data-k="instrumento" data-opc="instr_fx"></select></label>
+    <label class="campo" data-si="instrumento:otro"><span class="etq">¿Qué instrumento?</span>
+      <input type="text" data-k="instrumento_otro" maxlength="120"></label>
+    <label class="campo"><span class="etq">Contraparte</span>
+      <input type="text" data-k="contraparte" list="lista-bancos" maxlength="100"></label>
+    <label class="campo"><span class="etq">Moneda</span>
+      <select data-k="moneda" data-opc="monedas"></select></label>
+    <label class="campo" data-si="moneda:otra"><span class="etq">¿Cuál moneda?</span>
+      <input type="text" data-k="moneda_otra" maxlength="10"></label>
     <label class="campo"><span class="etq">Fecha de vencimiento</span>
       <input type="date" data-k="vencimiento"></label>
     <label class="campo"><span class="etq">Tipo de cambio pactado<span class="nota">Ej. 18.2500 MXN por USD. En opciones, el strike.</span></span>

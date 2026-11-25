@@ -33,6 +33,7 @@ Sin frameworks ni dependencias externas: HTML, CSS y JavaScript. No hay paso de 
   - **`payload_json`**: todas las respuestas con su estructura (listas de empresas, cuentas, créditos y coberturas).
 - Sin archivos, el envío va URL‑encoded. Con archivos, va como `FormData` sin fijar el `Content-Type`.
 - Netlify limita cada envío a 8 MB y un archivo por campo. El navegador valida el tamaño y los tipos permitidos (`.txt, .csv, .xlsx, .xls, .xml, .pdf, .zip`) antes de enviar.
+- **Campos obligatorios:** solo el nombre del grupo, los datos de contacto (nombre, puesto, correo y teléfono) y la casilla de consentimiento. Todo lo demás es opcional; la página interna marca como "sin dato" lo que no se contestó. Aunque un campo sea opcional, el formulario siempre bloquea textos que parezcan número de cuenta, archivos no permitidos y envíos de más de 8 MB.
 - El borrador se guarda en `localStorage` del navegador del cliente (envuelto en try/catch) y se borra al enviar. Los archivos adjuntos no se guardan en el borrador.
 - **Si agrega un campo plano al envío, agréguelo también en la copia oculta**; de lo contrario Netlify lo descarta.
 
