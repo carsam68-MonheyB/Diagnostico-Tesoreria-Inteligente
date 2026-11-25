@@ -106,10 +106,11 @@ Revise el consumo de envíos en **Forms → Usage**, según su plan de Netlify.
 2. Cargue el CSV descargado de Netlify o el JSON que el cliente descarga en el paso 14. Si el CSV trae varias respuestas, elija una en la lista.
 3. La página muestra:
    - los conteos;
+   - el **perfil técnico**: puntos técnicos a revisar (contradicciones o requisitos que salen de las respuestas), sistemas por empresa, Microsoft 365 y Power BI, conectividad bancaria y H2H con la tabla de cuentas, e infraestructura y restricciones de TI;
    - la matriz por dimensión (bancos/formatos, volumen, créditos y coberturas, intercompañías, sistemas/ERP e infraestructura);
    - la recomendación preliminar (Power BI o tablero interno; servidor propio o nube);
    - los créditos por moneda con su rango de tasa nominal anual (sin saldos);
-   - el detalle cualitativo.
+   - el detalle financiero y operativo (monedas, coberturas, intercompañías, pagos, cobranza).
 4. Mientras `config/complejidad.json` tenga valores `null`, la página muestra los valores, pero niveles y recomendación quedan **pendientes** y se listan los datos que faltan.
 5. Para probar valores sin publicarlos, use **“Usar otra configuración de la matriz”** y cargue un `complejidad.json` desde su equipo. Solo aplica en esa pestaña.
 

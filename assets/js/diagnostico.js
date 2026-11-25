@@ -279,6 +279,92 @@
     return { filas: filas, suma: suma, resultado: ganadores.length === 1 ? ops[ganadores[0]] : rc.empate };
   }
 
+  // ---------------------------------------------------------------- Perfil técnico
+  function texto(v) { return v == null || v === '' ? '—' : String(v); }
+  function puntosTecnicos(p) {
+    var r = [];
+    var aloj = g(p, 'infra.alojamiento');
+    var sale = g(p, 'infra.permite_salida');
+    var pbi = g(p, 'sistemas.powerbi');
+    var canales = arr(g(p, 'cuentas.canales'));
+    if ((aloj === 'nube' || aloj === 'indistinto') && sale === 'no') r.push('Prefiere ' + (aloj === 'nube' ? 'la nube' : 'cualquier alojamiento') + ', pero indica que la información no puede salir de la red de la empresa. Definir el alojamiento con su área de TI.');
+    if (!pbi || pbi === 'ninguna' || pbi === 'no_se') r.push('No hay licencias de Power BI confirmadas (' + etiqueta('powerbi', pbi) + ').');
+    if (aloj === 'servidor_propio' && ['pro', 'ppu', 'fabric'].indexOf(pbi) >= 0 && g(p, 'sistemas.gateway') !== 'si') r.push('Si se usa Power BI en línea con la base de datos en un servidor propio, hace falta un gateway de datos; hoy no tienen uno confirmado.');
+    if (g(p, 'infra.frecuencia') === 'intradia' && pbi === 'pro') r.push('Pide actualización intradía y tiene Power BI Pro: con Pro las actualizaciones programadas se limitan a 8 al día (con PPU o capacidad, 48). Verificar con la documentación vigente de Microsoft.');
+    if (arr(g(p, 'cuentas.formatos')).indexOf('pdf') >= 0) r.push('Recibe estados de cuenta en PDF: su lectura automática requiere extracción adicional; conviene pedir al banco otro formato (TXT, CSV, MT940 o CAMT.053).');
+    if (canales.length && canales.indexOf('h2h') < 0 && canales.indexOf('api') < 0) r.push('La información bancaria llega solo por banca en línea o descarga manual: la actualización dependerá de que alguien descargue los archivos.');
+    if (g(p, 'h2h.tiene') === 'si' && g(p, 'h2h.layouts_documentados') === 'no') r.push('Tiene host to host, pero sin layouts documentados.');
+    var e = erps(p);
+    if (e.length > 1) r.push('Usan ' + e.length + ' sistemas contables distintos: ' + e.join(', ') + '.');
+    if (arr(g(p, 'sistemas.conciliacion')).some(function (c) { return c === 'manual' || c === 'excel'; })) r.push('Concilian en Excel o manualmente.');
+    if (g(p, 'ic.tiene') === 'si' && arr(g(p, 'ic.identificacion')).indexOf('no_se_identifican') >= 0) r.push('Las operaciones intercompañías no se identifican en el estado de cuenta.');
+    if (g(p, 'infra.restricciones')) r.push('Capturó restricciones de TI en texto libre: revisarlas abajo.');
+    return r;
+  }
+  function perfilTecnico(p) {
+    var hijos = [];
+    var puntos = puntosTecnicos(p);
+    hijos.push(el('h3', { text: 'Puntos técnicos a revisar' }));
+    hijos.push(puntos.length
+      ? el('ul', {}, puntos.map(function (x) { return el('li', { text: x }); }))
+      : el('p', { class: 'nota', text: 'Sin puntos a resaltar con base en las respuestas.' }));
+    hijos.push(el('p', { class: 'nota', text: 'Observaciones que salen directamente de las respuestas; no son una recomendación.' }));
+
+    hijos.push(el('h3', { text: 'Sistemas' }));
+    var emp = arr(g(p, 'empresas.lista'));
+    if (emp.length) {
+      hijos.push(tabla(['Empresa', 'ERP', 'Moneda funcional', '¿Consolida?'], emp.map(function (x) {
+        return [texto(x.razon_social), x.erp === 'otro' ? texto(x.erp_otro) : etiqueta('erps', x.erp), x.moneda_funcional === 'otra' ? texto(x.moneda_funcional_otra) : etiqueta('monedas', x.moneda_funcional), etiqueta('si_no', x.consolida)];
+      })));
+    }
+    hijos.push(tabla(['Dato', 'Respuesta'], [
+      ['ERP o sistemas en uso (grupo)', erps(p).join('; ') || '—'],
+      ['Módulo de tesorería en el ERP', etiqueta('si_no_nose', g(p, 'sistemas.modulo_tesoreria'))],
+      ['Conciliación bancaria', etiquetas('conciliacion', g(p, 'sistemas.conciliacion')) + (g(p, 'sistemas.conciliacion_software') ? ' (' + g(p, 'sistemas.conciliacion_software') + ')' : '')],
+      ['Reportes actuales', texto(g(p, 'sistemas.reportes'))]
+    ]));
+
+    hijos.push(el('h3', { text: 'Microsoft 365 y Power BI' }));
+    hijos.push(tabla(['Dato', 'Respuesta'], [
+      ['Microsoft 365', etiqueta('si_no_nose', g(p, 'sistemas.m365'))],
+      ['Licencias de Power BI', etiqueta('powerbi', g(p, 'sistemas.powerbi'))],
+      ['Gateway de datos instalado', etiqueta('si_no_nose', g(p, 'sistemas.gateway'))]
+    ]));
+
+    hijos.push(el('h3', { text: 'Conectividad bancaria' }));
+    var h2h = g(p, 'h2h.tiene') === 'si';
+    hijos.push(tabla(['Dato', 'Respuesta'], [
+      ['Canales de información', etiquetas('canales', g(p, 'cuentas.canales'))],
+      ['Formatos de estado de cuenta', etiquetas('formatos', g(p, 'cuentas.formatos')) + (g(p, 'cuentas.formatos_otro') ? ' (' + g(p, 'cuentas.formatos_otro') + ')' : '')],
+      ['Frecuencia de descarga actual', etiquetas('frecuencia_descarga', g(p, 'cuentas.frecuencia'))],
+      ['Host to host', etiqueta('si_no_nose', g(p, 'h2h.tiene'))],
+      ['Bancos con H2H', h2h ? (bancosH2h(p).join('; ') || '—') : '—'],
+      ['Protocolo H2H', h2h ? (g(p, 'h2h.protocolo') === 'otro' ? texto(g(p, 'h2h.protocolo_otro')) : etiqueta('protocolo', g(p, 'h2h.protocolo'))) : '—'],
+      ['Administra el H2H', h2h ? etiquetas('administra_h2h', g(p, 'h2h.administra')) : '—'],
+      ['Archivos que entrega el banco', h2h ? etiquetas('h2h_recibe', g(p, 'h2h.recibe')) + (g(p, 'h2h.recibe_otro') ? ' (' + g(p, 'h2h.recibe_otro') + ')' : '') : '—'],
+      ['Archivos que envía la empresa', h2h ? etiquetas('h2h_envia', g(p, 'h2h.envia')) + (g(p, 'h2h.envia_otro') ? ' (' + g(p, 'h2h.envia_otro') + ')' : '') : '—'],
+      ['Layouts documentados', h2h ? etiqueta('si_no', g(p, 'h2h.layouts_documentados')) : '—']
+    ]));
+    var cu = arr(g(p, 'cuentas.lista'));
+    if (cu.length) {
+      hijos.push(el('h4', { text: 'Cuentas por empresa, banco, moneda y tipo' }));
+      hijos.push(tabla(['Empresa', 'Banco', 'Moneda', 'Tipo', 'Cuentas', 'Movimientos al mes', 'Uso principal'], cu.map(function (c) {
+        return [texto(c.empresa), texto(c.banco), c.moneda === 'otra' ? texto(c.moneda_otra) : texto(c.moneda), etiqueta('tipos_cuenta', c.tipo), fmt(c.cantidad == null ? 1 : c.cantidad, 0), num(c.movimientos_mes) == null ? 'sin dato' : fmt(num(c.movimientos_mes), 0), texto(c.uso)];
+      }), [4, 5]));
+    }
+
+    hijos.push(el('h3', { text: 'Infraestructura y preferencias' }));
+    hijos.push(tabla(['Dato', 'Respuesta'], [
+      ['Alojamiento preferido', etiqueta('alojamiento', g(p, 'infra.alojamiento')) + (arr(g(p, 'infra.nubes')).length ? ' (' + etiquetas('nubes', g(p, 'infra.nubes')) + ')' : '')],
+      ['¿La información puede salir de la red?', etiqueta('si_no_nose', g(p, 'infra.permite_salida'))],
+      ['Restricciones de TI', texto(g(p, 'infra.restricciones'))],
+      ['Frecuencia de actualización deseada', etiqueta('frecuencia_tablero', g(p, 'infra.frecuencia'))],
+      ['Usuarios del tablero', num(g(p, 'infra.usuarios')) == null ? '—' : fmt(num(g(p, 'infra.usuarios')), 0)],
+      ['¿Quién usará el tablero?', etiquetas('usuarios_tablero', g(p, 'contacto.usuarios_tablero')) + (g(p, 'contacto.usuarios_tablero_otro') ? ' (' + g(p, 'contacto.usuarios_tablero_otro') + ')' : '')]
+    ]));
+    return hijos;
+  }
+
   // ---------------------------------------------------------------- Render
   function tabla(cabeceras, filas, numericas) {
     numericas = numericas || [];
@@ -324,6 +410,9 @@
     bloques.push(seccion('Conteos', [el('div', { class: 'kpis' }, kpis.map(function (k) {
       return el('div', { class: 'kpi' }, [el('div', { class: 'kpi-valor', text: fmt(k[1], 0) }), el('div', { class: 'kpi-etq', text: k[0] })]);
     }))]));
+
+    // Perfil técnico
+    bloques.push(seccion('Perfil técnico', perfilTecnico(p)));
 
     // Matriz
     var faltan = cfg ? revisarConfig(cfg) : ['No se cargó config/complejidad.json'];
@@ -400,29 +489,26 @@
       ]));
     }
 
-    // Detalle cualitativo
+    // Detalle financiero y operativo
+    var vol = g(p, 'pagos.volumen') || {};
     var det = [
-      ['Bancos capturados', bancosUnicos(p).join('; ') || '—'],
-      ['Bancos con H2H', bancosH2h(p).join('; ') || (g(p, 'h2h.tiene') ? etiqueta('si_no_nose', g(p, 'h2h.tiene')) : '—')],
-      ['Canales', etiquetas('canales', g(p, 'cuentas.canales'))],
-      ['Formatos', etiquetas('formatos', g(p, 'cuentas.formatos')) + (g(p, 'cuentas.formatos_otro') ? ' (' + g(p, 'cuentas.formatos_otro') + ')' : '')],
-      ['Frecuencia de descarga actual', etiquetas('frecuencia_descarga', g(p, 'cuentas.frecuencia'))],
       ['Monedas', monedas(p).join(', ') || '—'],
-      ['Tipo de cambio para valuar', etiquetas('tipo_cambio', g(p, 'monedas.tipo_cambio'))],
+      ['Tipo de cambio para valuar', etiquetas('tipo_cambio', g(p, 'monedas.tipo_cambio')) + (g(p, 'monedas.tipo_cambio_otro') ? ' (' + g(p, 'monedas.tipo_cambio_otro') + ')' : '')],
+      ['Coberturas de tasa', g(p, 'cob_tasa.tiene') === 'si' ? arr(g(p, 'cob_tasa.lista')).map(function (c) { return etiqueta('instr_tasa', c.instrumento) + ' con ' + (c.contraparte || '—') + (c.tasa_strike != null ? ' (' + fmt(c.tasa_strike, 4) + ' % nominal anual)' : ''); }).join('; ') || 'Sí' : etiqueta('si_no_coberturas', g(p, 'cob_tasa.tiene'))],
+      ['Valuación de coberturas de tasa', etiquetas('valuador', g(p, 'cob_tasa.valuador')) + (g(p, 'cob_tasa.frecuencia_valuacion') ? ' · ' + etiqueta('frecuencia_valuacion', g(p, 'cob_tasa.frecuencia_valuacion')) : '')],
+      ['Coberturas cambiarias', g(p, 'cob_fx.tiene') === 'si' ? arr(g(p, 'cob_fx.lista')).map(function (c) { return etiqueta('instr_fx', c.instrumento) + ' con ' + (c.contraparte || '—') + ' (' + (c.moneda === 'otra' ? c.moneda_otra : (c.moneda || '—')) + ')'; }).join('; ') || 'Sí' : etiqueta('si_no_coberturas', g(p, 'cob_fx.tiene'))],
       ['Posición natural USD', etiqueta('posicion_natural', g(p, 'cob_fx.posicion_natural'))],
       ['Política de cobertura documentada', etiqueta('si_no', g(p, 'cob_fx.politica'))],
-      ['ERP / sistemas', erps(p).join('; ') || '—'],
-      ['Conciliación', etiquetas('conciliacion', g(p, 'sistemas.conciliacion'))],
-      ['Power BI', etiqueta('powerbi', g(p, 'sistemas.powerbi')) + ' · Gateway: ' + etiqueta('si_no_nose', g(p, 'sistemas.gateway')) + ' · M365: ' + etiqueta('si_no_nose', g(p, 'sistemas.m365'))],
-      ['Alojamiento preferido', etiqueta('alojamiento', g(p, 'infra.alojamiento')) + (arr(g(p, 'infra.nubes')).length ? ' (' + etiquetas('nubes', g(p, 'infra.nubes')) + ')' : '')],
-      ['¿Puede salir la información?', etiqueta('si_no_nose', g(p, 'infra.permite_salida'))],
-      ['Restricciones de TI', g(p, 'infra.restricciones') || '—'],
-      ['Frecuencia deseada', etiqueta('frecuencia_tablero', g(p, 'infra.frecuencia'))],
-      ['Indicadores', etiquetas('indicadores', g(p, 'infra.indicadores')) + (g(p, 'infra.indicadores_otro') ? ' (' + g(p, 'infra.indicadores_otro') + ')' : '')],
-      ['Reportes actuales', g(p, 'sistemas.reportes') || '—'],
+      ['Intercompañías', g(p, 'ic.tiene') === 'si' ? etiquetas('conceptos_ic', g(p, 'ic.conceptos')) + (g(p, 'ic.frecuencia') ? ' · ' + etiqueta('frecuencia_ic', g(p, 'ic.frecuencia')) : '') + (num(g(p, 'ic.operaciones_mes')) != null ? ' · ' + fmt(num(g(p, 'ic.operaciones_mes')), 0) + ' operaciones al mes' : '') : etiqueta('si_no', g(p, 'ic.tiene'))],
+      ['Identificación de intercompañías', etiquetas('identificacion_ic', g(p, 'ic.identificacion'))],
+      ['Intereses intercompañía', g(p, 'ic.intereses') === 'si' ? 'Sí · ' + (g(p, 'ic.tasa') || 'tasa no indicada') : etiqueta('si_no', g(p, 'ic.intereses'))],
+      ['Pagos a terceros (al mes)', arr(g(p, 'pagos.tipos')).map(function (t) { return etiqueta('tipos_pago', t) + (num(vol[t]) != null ? ': ' + fmt(num(vol[t]), 0) : ''); }).join('; ') || '—'],
+      ['Dispersión masiva por layout', etiqueta('dispersion', g(p, 'pagos.dispersion_masiva'))],
+      ['Cobranza', etiquetas('cobranza', g(p, 'pagos.cobranza'))],
+      ['Indicadores solicitados', etiquetas('indicadores', g(p, 'infra.indicadores')) + (g(p, 'infra.indicadores_otro') ? ' (' + g(p, 'infra.indicadores_otro') + ')' : '')],
       ['Archivos adjuntos', arr(g(p, 'meta.archivos')).map(function (a) { return a.nombre; }).join('; ') || 'ninguno']
     ];
-    bloques.push(seccion('Detalle para el diagnóstico', [tabla(['Dato', 'Respuesta'], det)]));
+    bloques.push(seccion('Detalle financiero y operativo', [tabla(['Dato', 'Respuesta'], det)]));
 
     bloques.push(seccion('Respuesta completa (JSON)', [el('details', {}, [el('summary', { text: 'Ver JSON' }), el('pre', { text: JSON.stringify(p, null, 2) })])]));
 
