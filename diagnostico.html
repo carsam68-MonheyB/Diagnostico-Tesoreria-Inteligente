@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Diagnóstico interno</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <script src="/assets/js/catalogos.js" defer></script>
+  <script src="/assets/js/diagnostico.js" defer></script>
+</head>
+<body>
+<header class="sitio-cab">
+  <div class="contenedor">
+    <span class="marca">Diagnóstico de complejidad</span>
+    <span class="marca-sub">Uso interno · no visible al cliente</span>
+  </div>
+</header>
+<main id="contenido" class="contenedor">
+  <section class="tarjeta">
+    <h1>Cargar una respuesta</h1>
+    <p>Cargue el <strong>CSV</strong> que descarga de Netlify (Forms → diagnostico-tesoreria → Download as CSV) o el <strong>JSON</strong> que descarga el cliente. Todo se procesa en este navegador: la página no envía nada a ningún lado.</p>
+    <div class="campos dos">
+      <label class="campo"><span class="etq">Archivo de respuestas (.csv o .json)</span>
+        <input type="file" id="archivo-respuestas" accept=".csv,.json"></label>
+      <label class="campo" id="campo-seleccion" hidden><span class="etq">Respuesta a analizar</span>
+        <select id="seleccion"></select></label>
+    </div>
+    <details class="no-imprimir">
+      <summary>Usar otra configuración de la matriz (para probar valores)</summary>
+      <label class="campo"><span class="etq">Archivo complejidad.json</span>
+        <input type="file" id="archivo-config" accept=".json"></label>
+    </details>
+    <div id="estado" role="status"></div>
+  </section>
+
+  <div id="resultado"></div>
+</main>
+</body>
+</html>

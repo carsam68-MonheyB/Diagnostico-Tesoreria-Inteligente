@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /diagnostico.html
+Disallow: /config/
+Disallow: /gracias.html
