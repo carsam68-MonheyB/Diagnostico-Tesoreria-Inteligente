@@ -349,6 +349,13 @@
         errores.push({ texto: prefijoItem(c) + etq + ': ' + motivo, foco: c });
       }
     });
+    $$('input[type=text], textarea', sec).forEach(function (c) {
+      if (c.matches(':disabled') || c.closest('.hp') || c.dataset.k === 'rfc') return;
+      if (pareceCuenta(c.value)) {
+        c.setAttribute('aria-invalid', 'true');
+        errores.push({ texto: prefijoItem(c) + textoEtiqueta(c.closest('label') && $('.etq', c.closest('label'))) + ': parece contener un número de cuenta, CLABE o tarjeta. Bórrelo; este cuestionario no debe incluir números de cuenta.', foco: c });
+      }
+    });
     $$('.opciones[data-min]', sec).forEach(function (cont) {
       if (cont.closest('[data-si][hidden]')) return;
       var marcados = $$('input[type=checkbox], input[type=radio]', cont).filter(function (c) { return c.checked; }).length;
@@ -463,8 +470,13 @@
   }
   function actualizarConteoCuentas() {
     var n = Number(($('[data-k="cuentas.numero_total"]') || {}).value || 0);
-    var cap = $$('[data-repeat="cuentas.lista"] .rep-item').length;
-    $('#cuentas-conteo').textContent = n ? 'Capturó el detalle de ' + cap + ' de ' + n + ' cuentas. Si son muchas, puede usar la plantilla.' : '';
+    var cap = $$('[data-repeat="cuentas.lista"] [data-k="cantidad"]').reduce(function (a, i) { return a + (Number(i.value) || 0); }, 0);
+    $('#cuentas-conteo').textContent = n ? 'Los grupos capturados suman ' + cap + ' de ' + n + ' cuentas.' : '';
+  }
+  // Detecta secuencias que parecen número de cuenta, CLABE o tarjeta (10 o más dígitos seguidos,
+  // aunque estén separados por espacios o guiones).
+  function pareceCuenta(texto) {
+    return /\d(?:[\s-]?\d){9,}/.test(String(texto || ''));
   }
 
   // ---------------------------------------------------------------- Importación de plantilla de cuentas
@@ -484,17 +496,20 @@
     var cab = filas[idx].map(norm);
     function col(nombres) { for (var j = 0; j < cab.length; j++) if (nombres.some(function (n) { return cab[j].indexOf(n) === 0; })) return j; return -1; }
     var c = {
-      empresa: col(['empresa']), banco: col(['banco']), moneda: col(['moneda']), ultimos4: col(['ultimos', 'cuenta']),
+      empresa: col(['empresa']), banco: col(['banco']), moneda: col(['moneda']), cantidad: col(['numero de cuentas', 'cantidad']),
       tipo: col(['tipo']), uso: col(['uso']), movs: col(['movimientos'])
     };
     var empresas = listaEmpresas();
     var cont = $('[data-repeat="cuentas.lista"]');
-    var agregadas = 0, recortadas = 0, sinEmpresa = 0;
+    var agregadas = 0, totalCuentas = 0, sinEmpresa = 0, usoDescartado = 0;
     filas.slice(idx + 1).forEach(function (f) {
       var val = function (j) { return j >= 0 && f[j] != null ? String(f[j]).trim() : ''; };
-      if (!val(c.banco) && !val(c.ultimos4)) return;
-      var digitos = val(c.ultimos4).replace(/\D/g, '');
-      if (digitos.length > 4) recortadas++;
+      if (!val(c.banco)) return;
+      var cant = Math.round(Number(val(c.cantidad).replace(/[^\d.]/g, '')));
+      if (!(cant >= 1)) cant = 1;
+      totalCuentas += cant;
+      var uso = val(c.uso);
+      if (pareceCuenta(uso)) { uso = ''; usoDescartado++; }
       var emp = val(c.empresa);
       var empOk = empresas.filter(function (e) { return norm(e) === norm(emp); })[0] || '';
       if (emp && !empOk) sinEmpresa++;
@@ -504,8 +519,8 @@
       agregarItem(cont, {
         empresa: empOk || emp, banco: val(c.banco),
         moneda: monOk || (mon ? 'otra' : ''), moneda_otra: monOk ? '' : mon,
-        ultimos4: digitos.slice(-4), tipo: buscarOpcion('tipos_cuenta', val(c.tipo)),
-        uso: val(c.uso), movimientos_mes: movs === '' ? null : Math.round(Number(movs))
+        cantidad: cant, tipo: buscarOpcion('tipos_cuenta', val(c.tipo)),
+        uso: uso, movimientos_mes: movs === '' ? null : Math.round(Number(movs))
       });
       agregadas++;
     });
@@ -513,8 +528,8 @@
     evaluarCondiciones();
     actualizarConteoCuentas();
     guardarBorrador();
-    var msg = 'Se agregaron ' + agregadas + ' cuentas. Revise cada ficha.';
-    if (recortadas) msg += ' En ' + recortadas + ' filas venía un número de más de 4 dígitos: solo conservamos los últimos 4.';
+    var msg = 'Se agregaron ' + agregadas + ' grupos (' + totalCuentas + ' cuentas). Revise cada ficha. Solo se leyeron las columnas de la plantilla.';
+    if (usoDescartado) msg += ' En ' + usoDescartado + ' filas el “Uso principal” parecía contener un número de cuenta y se dejó en blanco.';
     if (sinEmpresa) msg += ' En ' + sinEmpresa + ' filas la empresa no coincide con las del paso 2: elíjala en la ficha.';
     return msg;
   }
@@ -796,11 +811,10 @@
     var opc = t.closest('.opciones[aria-invalid]');
     if (opc) opc.removeAttribute('aria-invalid');
     if (t.dataset.k === 'rfc') t.value = t.value.toUpperCase();
-    if (t.dataset.k === 'ultimos4') t.value = t.value.replace(/\D/g, '').slice(0, 4);
     var item = t.closest('[data-repeat="creditos.lista"] .rep-item');
     if (item) calcularTasa(item);
     if (t.id === 'empresas-numero') sincronizarEmpresas();
-    if (t.dataset.k === 'cuentas.numero_total') actualizarConteoCuentas();
+    if (t.dataset.k === 'cuentas.numero_total' || t.dataset.k === 'cantidad') actualizarConteoCuentas();
     if (t.id === 'consentimiento') aceptadoEn = t.checked ? isoLocal(new Date()) : '';
     if (t.type === 'file') revisarArchivos();
     evaluarCondiciones();

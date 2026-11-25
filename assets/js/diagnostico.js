@@ -127,7 +127,7 @@
 
   var METRICAS = {
     num_bancos: { nombre: 'Número de bancos', f: function (p) { return num(g(p, 'cuentas.numero_bancos')) != null ? num(g(p, 'cuentas.numero_bancos')) : bancosUnicos(p).length; } },
-    num_cuentas: { nombre: 'Número de cuentas', f: function (p) { return num(g(p, 'cuentas.numero_total')) != null ? num(g(p, 'cuentas.numero_total')) : arr(g(p, 'cuentas.lista')).length; } },
+    num_cuentas: { nombre: 'Número de cuentas', f: function (p) { return num(g(p, 'cuentas.numero_total')) != null ? num(g(p, 'cuentas.numero_total')) : sumar(arr(g(p, 'cuentas.lista')).map(function (c) { return c.cantidad == null ? 1 : c.cantidad; })); } },
     num_formatos: { nombre: 'Formatos de estado de cuenta distintos', f: function (p) { return arr(g(p, 'cuentas.formatos')).length; } },
     num_bancos_h2h: { nombre: 'Bancos con H2H', f: function (p) { return bancosH2h(p).length; } },
     num_canales: { nombre: 'Canales de información distintos', f: function (p) { return arr(g(p, 'cuentas.canales')).length; } },
@@ -372,33 +372,31 @@
       bloques.push(seccion('Matriz de complejidad', hijosMatriz));
     }
 
-    // Deuda
+    // Créditos (solo condiciones: el formulario no pide saldos ni montos)
     var cr = creditos(p);
     if (cr.length) {
       var porMoneda = {};
       cr.forEach(function (x) {
         var m = x.moneda === 'otra' ? (x.moneda_otra || 'Otra') : (x.moneda || '—');
-        porMoneda[m] = porMoneda[m] || { saldo: 0, conTasa: 0, ponderado: 0, n: 0 };
-        var s = num(x.saldo_actual);
-        var t = num(x.tasa_nominal);
+        porMoneda[m] = porMoneda[m] || { n: 0, tasas: [] };
         porMoneda[m].n++;
-        if (s != null) porMoneda[m].saldo += s;
-        if (s != null && t != null) { porMoneda[m].conTasa += s; porMoneda[m].ponderado += s * t; }
+        if (num(x.tasa_nominal) != null) porMoneda[m].tasas.push(num(x.tasa_nominal));
       });
       var filasM = Object.keys(porMoneda).map(function (m) {
         var d = porMoneda[m];
-        return [m, d.n, fmt(d.saldo, 2), d.conTasa ? fmt(d.ponderado / d.conTasa, 4) + ' %' : 'sin dato', d.saldo ? fmt(d.conTasa / d.saldo * 100, 1) + ' %' : '—'];
+        var rango = d.tasas.length ? fmt(Math.min.apply(null, d.tasas), 4) + ' % – ' + fmt(Math.max.apply(null, d.tasas), 4) + ' %' : 'sin dato';
+        return [m, d.n, rango, d.tasas.length + ' de ' + d.n];
       });
       var filasC = cr.map(function (x, i) {
         var base = x.tasa_base === 'fija' ? 'Fija ' + fmt(num(x.tasa_fija), 4) + ' %' :
           (x.tasa_base === 'otra' ? (x.tasa_base_otra || 'Otra') : etiqueta('tasas_base', x.tasa_base)) + ' + ' + fmt(num(x.sobretasa_pp), 4) + ' pp';
-        return [i + 1, etiqueta('tipos_credito', x.tipo), x.empresa || '—', x.banco || '—', x.moneda === 'otra' ? x.moneda_otra : x.moneda, fmt(num(x.saldo_actual), 2), x.vencimiento || '—', base, num(x.tasa_nominal) == null ? 'sin dato' : fmt(num(x.tasa_nominal), 4) + ' %', etiqueta('tabla_amort', x.tabla_amortizacion)];
+        return [i + 1, etiqueta('tipos_credito', x.tipo), x.empresa || '—', x.banco || '—', x.moneda === 'otra' ? x.moneda_otra : x.moneda, x.vencimiento || '—', base, num(x.tasa_nominal) == null ? 'sin dato' : fmt(num(x.tasa_nominal), 4) + ' %', etiqueta('amortizacion', x.amortizacion), etiqueta('tabla_amort', x.tabla_amortizacion)];
       });
-      bloques.push(seccion('Deuda capturada', [
-        el('p', { class: 'nota', text: 'Cifras tal como las capturó el cliente. Tasas nominales anuales; el costo promedio se pondera por saldo actual y solo incluye créditos con saldo y tasa nominal capturados.' }),
-        tabla(['Moneda', 'Créditos', 'Saldo actual', 'Costo promedio ponderado (nominal anual)', 'Saldo con tasa capturada'], filasM, [1, 2, 3, 4]),
+      bloques.push(seccion('Créditos capturados', [
+        el('p', { class: 'nota', text: 'Condiciones tal como las capturó el cliente (sin saldos ni montos). Tasas nominales anuales.' }),
+        tabla(['Moneda', 'Créditos', 'Rango de tasa nominal anual', 'Con tasa capturada'], filasM, [1]),
         el('h3', { text: 'Detalle de créditos' }),
-        tabla(['#', 'Tipo', 'Empresa', 'Banco', 'Moneda', 'Saldo', 'Vencimiento', 'Tasa pactada', 'Tasa nominal anual', 'Tabla de amortización'], filasC, [5, 8])
+        tabla(['#', 'Tipo', 'Empresa', 'Banco', 'Moneda', 'Vencimiento', 'Tasa pactada', 'Tasa nominal anual', 'Amortización', 'Tabla de amortización'], filasC, [7])
       ]));
     }
 

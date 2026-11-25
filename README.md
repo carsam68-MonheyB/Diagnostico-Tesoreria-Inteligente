@@ -107,7 +107,7 @@ Revise el consumo de envíos en **Forms → Usage**, según su plan de Netlify.
    - los conteos;
    - la matriz por dimensión (bancos/formatos, volumen, créditos y coberturas, intercompañías, sistemas/ERP e infraestructura);
    - la recomendación preliminar (Power BI o tablero interno; servidor propio o nube);
-   - la deuda por moneda con su costo promedio ponderado en tasa nominal anual;
+   - los créditos por moneda con su rango de tasa nominal anual (sin saldos);
    - el detalle cualitativo.
 4. Mientras `config/complejidad.json` tenga valores `null`, la página muestra los valores, pero niveles y recomendación quedan **pendientes** y se listan los datos que faltan.
 5. Para probar valores sin publicarlos, use **“Usar otra configuración de la matriz”** y cargue un `complejidad.json` desde su equipo. Solo aplica en esa pestaña.
@@ -125,7 +125,10 @@ Las instrucciones también están dentro de `config/complejidad.json`.
 
 ## Seguridad
 
-- El formulario **no** pide números de cuenta o CLABE completos (solo los últimos 4 dígitos, validados), contraseñas, tokens, llaves, certificados ni credenciales del H2H. Si la plantilla de cuentas trae números completos, solo se conservan los últimos 4 dígitos. La plantilla se lee en el navegador y no se envía.
+- El formulario **no pide ningún número de cuenta ni CLABE (ni completo ni parcial) ni ningún saldo, monto o nocional.** Las cuentas se describen por empresa, banco, moneda y tipo, con su cantidad; los créditos y coberturas, solo por sus condiciones (tipo, moneda, tasa, plazos).
+- Si un campo de texto contiene 10 o más dígitos seguidos (aunque estén separados por espacios o guiones), el formulario no deja avanzar y pide borrarlo, porque parece número de cuenta, CLABE o tarjeta.
+- La plantilla de cuentas se lee en el navegador y no se envía; solo se toman sus columnas (cualquier otra columna, por ejemplo números de cuenta o saldos, se ignora).
+- Tampoco pide contraseñas, tokens, llaves, certificados ni credenciales del H2H.
 - Los archivos de muestra deben ser layouts o ejemplos anonimizados; la advertencia aparece junto a cada campo de carga.
 - `netlify.toml` aplica una política de seguridad de contenido (CSP) estricta: sin scripts de terceros.
 - También bloquea el acceso público a `README.md`, `netlify.toml` y `tools/`.

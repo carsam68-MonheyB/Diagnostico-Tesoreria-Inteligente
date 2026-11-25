@@ -74,7 +74,8 @@
       <div class="caja caja-aviso">
         <h3>Lo que este cuestionario NO le pide (y no debe enviar)</h3>
         <ul>
-          <li>Números de cuenta ni CLABE completos: solo los <strong>últimos 4 dígitos</strong>.</li>
+          <li><strong>Ningún número de cuenta ni CLABE</strong>, ni completo ni parcial. Las cuentas se describen solo por banco, moneda y tipo.</li>
+          <li><strong>Ningún saldo, monto ni nocional.</strong> Solo preguntamos condiciones (tipo, moneda, tasa, plazos) y volúmenes aproximados de operaciones.</li>
           <li>Contraseñas, tokens, llaves, certificados, usuarios de banca en línea ni credenciales del host to host.</li>
           <li>Estados de cuenta reales con movimientos. Si comparte archivos de ejemplo, deben ser <strong>layouts o ejemplos anonimizados</strong>.</li>
         </ul>
@@ -167,11 +168,11 @@
           <input type="number" data-k="cuentas.numero_bancos" min="1" max="200" step="1" required inputmode="numeric"></label>
       </div>
 
-      <h3>Detalle por cuenta</h3>
+      <h3>Cuentas por empresa, banco, moneda y tipo</h3>
       <div class="caja caja-aviso">
-        <p><strong>Solo los últimos 4 dígitos</strong> de cada cuenta o CLABE. Nunca escriba el número completo.</p>
+        <p><strong>No escriba números de cuenta ni CLABE (ni siquiera los últimos dígitos) ni saldos.</strong> Cada renglón agrupa las cuentas que comparten empresa, banco, moneda y tipo; solo indique cuántas son.</p>
       </div>
-      <p>Puede capturar las cuentas una por una o llenar la plantilla y cargarla aquí. La plantilla se lee <strong>dentro de su navegador</strong>; el archivo no se envía, solo las filas que se agregan abajo. Si la plantilla trae números completos, el formulario conserva solo los últimos 4 dígitos.</p>
+      <p>Puede capturar los renglones aquí o llenar la plantilla y cargarla. La plantilla se lee <strong>dentro de su navegador</strong>; el archivo no se envía. Solo se leen las columnas de la plantilla: cualquier otra columna (por ejemplo, números de cuenta o saldos) se ignora.</p>
       <div class="acciones no-resumen">
         <a class="btn btn-sec btn-chico" href="/assets/plantillas/plantilla_cuentas.xlsx" download>Descargar plantilla Excel</a>
         <a class="btn btn-sec btn-chico" href="/assets/plantillas/plantilla_cuentas.csv" download>Descargar plantilla CSV</a>
@@ -181,9 +182,9 @@
       <div id="importar-estado" role="status" class="no-resumen"></div>
       <p id="cuentas-conteo" class="nota" role="status"></p>
 
-      <div data-repeat="cuentas.lista" data-tpl="tpl-cuenta" data-titulo="Cuenta">
+      <div data-repeat="cuentas.lista" data-tpl="tpl-cuenta" data-titulo="Grupo de cuentas">
         <div class="rep-lista"></div>
-        <button type="button" class="btn btn-sec" data-add>+ Agregar cuenta</button>
+        <button type="button" class="btn btn-sec" data-add>+ Agregar grupo de cuentas</button>
       </div>
 
       <h3>Cómo obtienen hoy la información</h3>
@@ -255,7 +256,7 @@
           <div class="opciones linea" data-grupo="h2h.layouts_documentados" data-opc="si_no" data-tipo="radio" data-min="1"></div>
         </fieldset>
         <div class="caja caja-aviso">
-          <p><strong>Solo layouts o ejemplos anonimizados.</strong> El archivo no debe contener nombres de clientes o proveedores, números de cuenta completos ni saldos reales. Tipos permitidos: .txt, .csv, .xlsx, .xls, .xml, .pdf, .zip.</p>
+          <p><strong>Solo layouts o ejemplos anonimizados.</strong> El archivo no debe contener nombres de clientes o proveedores, números de cuenta (ni completos ni parciales), saldos ni montos reales. Tipos permitidos: .txt, .csv, .xlsx, .xls, .xml, .pdf, .zip.</p>
         </div>
         <label class="campo"><span class="etq">Layout H2H anonimizado (opcional)</span>
           <input type="file" data-archivo="archivo_layout_h2h" accept=".txt,.csv,.xlsx,.xls,.xml,.pdf,.zip"></label>
@@ -292,6 +293,7 @@
           <div class="ayuda-texto">Con estos datos el tablero muestra la deuda total, los vencimientos y el costo financiero. Todas las tasas se capturan como tasas nominales anuales: la tasa nominal resulta de sumar la tasa base vigente más la sobretasa en puntos porcentuales.</div>
         </details>
       </div>
+      <p class="paso-intro">Solo las condiciones de cada crédito; <strong>no capture saldos ni montos</strong>.</p>
       <fieldset class="grupo">
         <legend>¿Tienen créditos o financiamientos vigentes?<span class="req" aria-hidden="true">*</span></legend>
         <div class="opciones linea" data-grupo="creditos.tiene" data-opc="si_no_creditos" data-tipo="radio" data-min="1"></div>
@@ -312,6 +314,7 @@
           <div class="ayuda-texto">Una cobertura de tasa (swap, cap, collar) cambia el costo efectivo de un crédito. Para mostrar el costo financiero real hay que ligar cada cobertura con el crédito que cubre y saber quién la valúa a mercado.</div>
         </details>
       </div>
+      <p class="paso-intro">Solo las condiciones de cada cobertura; <strong>no capture nocionales ni montos</strong>.</p>
       <fieldset class="grupo">
         <legend>¿Tienen coberturas de tasa de interés vigentes?<span class="req" aria-hidden="true">*</span></legend>
         <div class="opciones linea" data-grupo="cob_tasa.tiene" data-opc="si_no_coberturas" data-tipo="radio" data-min="1"></div>
@@ -341,6 +344,7 @@
           <div class="ayuda-texto">Las coberturas cambiarias y la posición natural en dólares permiten calcular la exposición cambiaria neta del grupo: cuánto le afecta un movimiento del tipo de cambio después de coberturas.</div>
         </details>
       </div>
+      <p class="paso-intro">Solo las condiciones de cada cobertura; <strong>no capture nocionales ni montos</strong>.</p>
       <fieldset class="grupo">
         <legend>¿Tienen coberturas cambiarias vigentes?<span class="req" aria-hidden="true">*</span></legend>
         <div class="opciones linea" data-grupo="cob_fx.tiene" data-opc="si_no_coberturas" data-tipo="radio" data-min="1"></div>
@@ -386,8 +390,6 @@
             <select data-k="ic.frecuencia" data-opc="frecuencia_ic" required></select></label>
           <label class="campo"><span class="etq">Número aproximado de operaciones al mes</span>
             <input type="number" data-k="ic.operaciones_mes" min="0" step="1" inputmode="numeric"></label>
-          <label class="campo ancho"><span class="etq">Monto aproximado mensual<span class="nota">Indique la moneda, ej. “15 millones MXN”.</span></span>
-            <input type="text" data-k="ic.monto_mes" maxlength="120"></label>
         </div>
         <fieldset class="grupo">
           <legend>¿Cómo se identifican en el estado de cuenta?<span class="req" aria-hidden="true">*</span></legend>
@@ -527,7 +529,7 @@
       <div class="caja caja-aviso">
         <h3>Antes de adjuntar</h3>
         <ul>
-          <li>Solo <strong>layouts o ejemplos anonimizados</strong>: sin nombres de clientes o proveedores, sin números de cuenta completos y sin saldos reales.</li>
+          <li>Solo <strong>layouts o ejemplos anonimizados</strong>: sin nombres de clientes o proveedores, sin números de cuenta (ni completos ni parciales) y sin saldos ni montos reales.</li>
           <li>No adjunte estados de cuenta reales con movimientos, contraseñas, llaves ni certificados.</li>
           <li>Tipos permitidos: .txt, .csv, .xlsx, .xls, .xml, .pdf, .zip. Un archivo por campo; si tiene varios, júntelos en un .zip.</li>
           <li>El envío completo (respuestas + archivos) no puede pasar de <strong>8 MB</strong>.</li>
@@ -636,13 +638,13 @@
       <select data-k="moneda" data-opc="monedas" required></select></label>
     <label class="campo" data-si="moneda:otra"><span class="etq">¿Cuál moneda?<span class="req" aria-hidden="true">*</span></span>
       <input type="text" data-k="moneda_otra" required maxlength="10"></label>
-    <label class="campo"><span class="etq">Últimos 4 dígitos de la cuenta<span class="req" aria-hidden="true">*</span></span>
-      <input type="text" data-k="ultimos4" required inputmode="numeric" maxlength="4" minlength="4" pattern="[0-9]{4}" autocomplete="off" data-mensaje="Escriba exactamente 4 dígitos (solo los últimos 4)."></label>
+    <label class="campo"><span class="etq">Número de cuentas con estas características<span class="req" aria-hidden="true">*</span><span class="nota">Cuántas cuentas, no su número.</span></span>
+      <input type="number" data-k="cantidad" value="1" min="1" max="5000" step="1" required inputmode="numeric"></label>
     <label class="campo"><span class="etq">Tipo de cuenta<span class="req" aria-hidden="true">*</span></span>
       <select data-k="tipo" data-opc="tipos_cuenta" required></select></label>
     <label class="campo"><span class="etq">Uso principal<span class="nota">Ej. pago a proveedores, cobranza, nómina.</span></span>
       <input type="text" data-k="uso" maxlength="150"></label>
-    <label class="campo"><span class="etq">Movimientos aproximados al mes</span>
+    <label class="campo"><span class="etq">Movimientos aproximados al mes<span class="nota">Total de estas cuentas.</span></span>
       <input type="number" data-k="movimientos_mes" min="0" step="1" inputmode="numeric"></label>
   </div>
 </template>
@@ -661,10 +663,6 @@
       <select data-k="moneda" data-opc="monedas" required></select></label>
     <label class="campo" data-si="moneda:otra"><span class="etq">¿Cuál moneda?<span class="req" aria-hidden="true">*</span></span>
       <input type="text" data-k="moneda_otra" required maxlength="10"></label>
-    <label class="campo"><span class="etq">Monto original<span class="nota">En la moneda del crédito.</span></span>
-      <input type="number" data-k="monto_original" min="0" step="any" inputmode="decimal"></label>
-    <label class="campo"><span class="etq">Saldo actual<span class="nota">En la moneda del crédito.</span></span>
-      <input type="number" data-k="saldo_actual" min="0" step="any" inputmode="decimal"></label>
     <label class="campo"><span class="etq">Fecha de vencimiento</span>
       <input type="date" data-k="vencimiento"></label>
   </div>
@@ -715,8 +713,6 @@
       <input type="text" data-k="instrumento_otro" required maxlength="120"></label>
     <label class="campo"><span class="etq">Contraparte<span class="req" aria-hidden="true">*</span></span>
       <input type="text" data-k="contraparte" list="lista-bancos" required maxlength="100"></label>
-    <label class="campo"><span class="etq">Nocional</span>
-      <input type="number" data-k="nocional" min="0" step="any" inputmode="decimal"></label>
     <label class="campo"><span class="etq">Moneda<span class="req" aria-hidden="true">*</span></span>
       <select data-k="moneda" data-opc="monedas" required></select></label>
     <label class="campo" data-si="moneda:otra"><span class="etq">¿Cuál moneda?<span class="req" aria-hidden="true">*</span></span>
@@ -740,9 +736,7 @@
       <input type="text" data-k="instrumento_otro" required maxlength="120"></label>
     <label class="campo"><span class="etq">Contraparte<span class="req" aria-hidden="true">*</span></span>
       <input type="text" data-k="contraparte" list="lista-bancos" required maxlength="100"></label>
-    <label class="campo"><span class="etq">Nocional</span>
-      <input type="number" data-k="nocional" min="0" step="any" inputmode="decimal"></label>
-    <label class="campo"><span class="etq">Moneda del nocional<span class="req" aria-hidden="true">*</span></span>
+    <label class="campo"><span class="etq">Moneda<span class="req" aria-hidden="true">*</span></span>
       <select data-k="moneda" data-opc="monedas" required></select></label>
     <label class="campo" data-si="moneda:otra"><span class="etq">¿Cuál moneda?<span class="req" aria-hidden="true">*</span></span>
       <input type="text" data-k="moneda_otra" required maxlength="10"></label>
