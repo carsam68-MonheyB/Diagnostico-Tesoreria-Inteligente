@@ -145,10 +145,8 @@ Marcados en amarillo en el sitio. Búsquelos con `grep -rn "PENDIENTE" .`.
 **Aviso de privacidad** — resuelto con el aviso integral de monhey.B (25 de noviembre de 2026), adaptado a los datos de este cuestionario: responsable, contacto, finalidades secundarias (boletines/promociones y encuestas, con una casilla de negativa para cada una), ARCO y plazos, revocación, limitación, conservación, cambios y autoridad. Versión `1.0` en `aviso-de-privacidad.html` y en `AVISO_VERSION` de `assets/js/form.js` (si publica una versión nueva, cambie ambas).
 4. ~~Responsable~~ · 5. ~~Domicilio~~ · 6. ~~Correo ARCO~~ · 7. ~~Conservación~~ · 8. ~~Finalidades secundarias~~ · 9. ~~Proveedor de correo~~ · 10. ~~Fecha~~ · 11. ~~Plazos ARCO y remisiones~~ · 12. ~~Acceso a la información~~
 
-**Contenido del formulario**
-13. Tiempo estimado de llenado (paso 0).
-14. Plazo de entrega y formato del diagnóstico para el cliente (paso 0).
-15. Plazo de respuesta (`gracias.html`).
+**Contenido del formulario** — resuelto: sin tiempo estimado, plazo de entrega ni plazo de respuesta (no se promete ninguno al cliente).
+13. ~~Tiempo de llenado~~ · 14. ~~Plazo de entrega~~ · 15. ~~Plazo de respuesta~~
 
 **Netlify**
 16. ~~Correo de notificaciones~~ — definido; se configura solo en Netlify (no se guarda en el repositorio).
