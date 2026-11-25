@@ -83,7 +83,7 @@ python3 tools/generar_plantilla.py
 1. En el menú lateral haga clic en **Forms** y después en la pestaña **Submission notifications**.
 2. Haga clic en **Add notification** y elija **Email notification**.
 3. En **Event to listen for** elija **New form submission**.
-4. En **Email to notify** escriba el correo `[[PENDIENTE: correo de notificaciones]]`.
+4. En **Email to notify** escriba el correo interno de notificaciones de monhey.B. No se anota aquí porque este repositorio es público.
 5. En **Form** elija **diagnostico-tesoreria** (no deje *Any form*).
 6. Haga clic en **Save**.
 7. Si el correo no pertenece a un miembro de su equipo en Netlify, llegará un correo de confirmación: ábralo y haga clic en **Confirm**. Hasta entonces la notificación aparece como *pending confirmation*.
@@ -151,7 +151,7 @@ Marcados en amarillo en el sitio. Búsquelos con `grep -rn "PENDIENTE" .`.
 15. Plazo de respuesta (`gracias.html`).
 
 **Netlify**
-16. Correo que recibirá las notificaciones de cada envío.
+16. ~~Correo de notificaciones~~ — definido; se configura solo en Netlify (no se guarda en el repositorio).
 
 **Matriz de complejidad (`config/complejidad.json`)**
 17. Número y nombres de niveles (propuesta: Baja / Media / Alta).
