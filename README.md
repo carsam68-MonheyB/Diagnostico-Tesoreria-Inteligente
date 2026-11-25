@@ -88,7 +88,7 @@ python3 tools/generar_plantilla.py
 6. Haga clic en **Save**.
 7. Si el correo no pertenece a un miembro de su equipo en Netlify, llegará un correo de confirmación: ábralo y haga clic en **Confirm**. Hasta entonces la notificación aparece como *pending confirmation*.
 
-El asunto del correo es “Nuevo diagnóstico de tesorería: {grupo}”, porque el formulario envía el campo `subject`.
+El asunto del correo es “Diagnóstico Tesorería Inteligente: {grupo}”, porque el formulario envía el campo `subject`, que tiene prioridad sobre el asunto configurado en Netlify.
 
 ### 4. Descargar las respuestas (CSV)
 

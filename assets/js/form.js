@@ -730,7 +730,7 @@
     return {
       'form-name': NETLIFY_FORM,
       'bot-field': $('#bot-field').value,
-      subject: 'Nuevo diagnóstico de tesorería: ' + (g('contacto.grupo') || 'sin nombre'),
+      subject: 'Diagnóstico Tesorería Inteligente: ' + (g('contacto.grupo') || 'sin nombre'),
       grupo: g('contacto.grupo'), giro: g('contacto.giro') === 'otro' ? g('contacto.giro_otro') : g('contacto.giro'),
       ciudad: g('contacto.ciudad'), contacto_nombre: g('contacto.nombre'), contacto_puesto: g('contacto.puesto'),
       contacto_correo: g('contacto.correo'), contacto_telefono: g('contacto.telefono'),
