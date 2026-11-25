@@ -7,7 +7,7 @@
   'use strict';
 
   // ---------------------------------------------------------------- Constantes
-  var AVISO_VERSION = '0.1-borrador';        // Debe coincidir con aviso-de-privacidad.html
+  var AVISO_VERSION = '1.0';        // Debe coincidir con aviso-de-privacidad.html
   var FORM_VERSION = '1.0';
   var NETLIFY_FORM = 'diagnostico-tesoreria';
   var BORRADOR_KEY = 'diagnostico-tesoreria:borrador:v1';
@@ -719,7 +719,8 @@
       },
       aviso_privacidad: {
         version: AVISO_VERSION, consentimiento: $('#consentimiento').checked, aceptado_en: aceptadoEn,
-        negativa_finalidades_secundarias: $('#negativa-secundarias').checked
+        negativa_boletines: $('#negativa-boletines').checked,
+        negativa_encuestas: $('#negativa-encuestas').checked
       }
     }, datos);
   }
@@ -741,7 +742,8 @@
       alojamiento_preferido: g('infra.alojamiento'),
       consentimiento_aviso: p.aviso_privacidad.consentimiento ? 'si' : 'no',
       aviso_version: AVISO_VERSION, aviso_aceptado_en: aceptadoEn,
-      negativa_finalidades_secundarias: p.aviso_privacidad.negativa_finalidades_secundarias ? 'si' : 'no',
+      negativa_boletines: p.aviso_privacidad.negativa_boletines ? 'si' : 'no',
+      negativa_encuestas: p.aviso_privacidad.negativa_encuestas ? 'si' : 'no',
       version_formulario: FORM_VERSION,
       payload_json: JSON.stringify(p)
     };
@@ -806,7 +808,7 @@
     if (t.id === 'consentimiento') aceptadoEn = t.checked ? isoLocal(new Date()) : '';
     if (t.type === 'file') revisarArchivos();
     evaluarCondiciones();
-    if (t.id !== 'consentimiento' && t.id !== 'negativa-secundarias') guardarBorrador();
+    if (t.id !== 'consentimiento' && t.id.indexOf('negativa-') !== 0) guardarBorrador();
   }
 
   form.addEventListener('input', alCambiar);

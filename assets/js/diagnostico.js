@@ -311,7 +311,7 @@
       el('p', { class: 'nota' }, ['Giro: ' + (g(p, 'contacto.giro') === 'otro' ? g(p, 'contacto.giro_otro') : etiqueta('giros', g(p, 'contacto.giro'))) +
         ' · Ciudad: ' + (g(p, 'contacto.ciudad') || '—') + ' · Enviado: ' + (r.fecha || g(p, 'meta.generado_en') || '—') +
         ' · Aviso v' + (g(p, 'aviso_privacidad.version') || '—') + ' aceptado: ' + (g(p, 'aviso_privacidad.aceptado_en') || '—') +
-        ' · Negativa finalidades secundarias: ' + siNo(g(p, 'aviso_privacidad.negativa_finalidades_secundarias'))])
+        ' · Se niega a boletines: ' + siNo(g(p, 'aviso_privacidad.negativa_boletines')) + ' · Se niega a encuestas: ' + siNo(g(p, 'aviso_privacidad.negativa_encuestas'))])
     ]));
 
     // Conteos

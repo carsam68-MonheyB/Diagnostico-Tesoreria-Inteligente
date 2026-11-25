@@ -82,7 +82,7 @@
 
       <div class="caja caja-info" id="aviso-simplificado-inicio">
         <h3>Aviso de privacidad simplificado</h3>
-        <p><span class="pendiente">[[PENDIENTE: nombre o razón social del responsable]]</span>, con domicilio en <span class="pendiente">[[PENDIENTE: domicilio]]</span>, es responsable del tratamiento de los datos personales de contacto que proporcione en este cuestionario (nombre, puesto, correo electrónico y teléfono). Los usaremos para elaborar el diagnóstico de tesorería solicitado, darle seguimiento y comunicarnos con usted sobre él. <span class="pendiente">[[PENDIENTE: finalidades secundarias, si las hay, y cómo negarse]]</span></p>
+        <p>Monhey.B, con domicilio en Torreón, Coahuila, es responsable del tratamiento de los datos personales de contacto que proporcione en este cuestionario (nombre, puesto, correo electrónico y teléfono). Los usaremos para elaborar el diagnóstico de tesorería solicitado, darle seguimiento y comunicarnos con usted sobre él. Con su consentimiento, también para enviarle boletines, promociones e invitaciones a eventos, y para encuestas de satisfacción; puede negarse con las casillas al final del cuestionario o escribiendo a <a href="mailto:contacto@monheyb.com">contacto@monheyb.com</a>.</p>
         <p>Puede consultar el aviso de privacidad integral en <a href="/aviso-de-privacidad.html" target="_blank" rel="noopener">aviso de privacidad integral (se abre en otra pestaña)</a>.</p>
       </div>
 
@@ -564,16 +564,20 @@
 
       <div class="caja caja-info">
         <h3>Aviso de privacidad simplificado</h3>
-        <p><span class="pendiente">[[PENDIENTE: nombre o razón social del responsable]]</span>, con domicilio en <span class="pendiente">[[PENDIENTE: domicilio]]</span>, tratará sus datos de contacto para elaborar el diagnóstico de tesorería, darle seguimiento y comunicarse con usted sobre él. <span class="pendiente">[[PENDIENTE: finalidades secundarias, si las hay]]</span> Consulte el <a href="/aviso-de-privacidad.html" target="_blank" rel="noopener">aviso de privacidad integral (se abre en otra pestaña)</a>, versión <span class="aviso-version">0.1-borrador</span>.</p>
+        <p>Monhey.B, con domicilio en Torreón, Coahuila, tratará sus datos de contacto para elaborar el diagnóstico de tesorería, darle seguimiento y comunicarse con usted sobre él. Con su consentimiento, también para enviarle boletines, promociones e invitaciones a eventos, y para encuestas de satisfacción; puede negarse con las casillas de abajo. Consulte el <a href="/aviso-de-privacidad.html" target="_blank" rel="noopener">aviso de privacidad integral (se abre en otra pestaña)</a>, versión <span class="aviso-version">1.0</span>.</p>
       </div>
 
       <label class="opcion">
         <input type="checkbox" id="consentimiento" required>
-        <span>He leído el aviso de privacidad integral (versión <span class="aviso-version">0.1-borrador</span>) y otorgo mi consentimiento para el tratamiento de mis datos personales para las finalidades primarias ahí descritas. También reconozco la cláusula de confidencialidad sobre la información de la empresa.<span class="req" aria-hidden="true">*</span></span>
+        <span>He leído el aviso de privacidad integral (versión <span class="aviso-version">1.0</span>) y otorgo mi consentimiento para el tratamiento de mis datos personales para las finalidades primarias ahí descritas. También reconozco la cláusula de confidencialidad sobre la información de la empresa.<span class="req" aria-hidden="true">*</span></span>
       </label>
       <label class="opcion">
-        <input type="checkbox" id="negativa-secundarias">
-        <span>No deseo que mis datos se usen para las finalidades secundarias: <span class="pendiente">[[PENDIENTE: describir finalidades secundarias o eliminar esta casilla si no las habrá]]</span></span>
+        <input type="checkbox" id="negativa-boletines">
+        <span>No deseo que mis datos se usen para enviarme boletines, promociones o invitaciones a eventos.</span>
+      </label>
+      <label class="opcion">
+        <input type="checkbox" id="negativa-encuestas">
+        <span>No deseo que mis datos se usen para encuestas o estudios de satisfacción.</span>
       </label>
       <p class="nota" id="tamano-envio-final" role="status"></p>
       <div id="envio-estado" role="status"></div>
@@ -773,7 +777,8 @@
   <input type="text" name="consentimiento_aviso">
   <input type="text" name="aviso_version">
   <input type="text" name="aviso_aceptado_en">
-  <input type="text" name="negativa_finalidades_secundarias">
+  <input type="text" name="negativa_boletines">
+  <input type="text" name="negativa_encuestas">
   <input type="text" name="version_formulario">
   <textarea name="payload_json"></textarea>
   <input type="file" name="archivo_layout_h2h">

@@ -29,7 +29,7 @@ Sin frameworks ni dependencias externas: HTML, CSS y JavaScript. No hay paso de 
 
 - La copia estática oculta del formulario `diagnostico-tesoreria` (al final de `index.html`) es la que Netlify detecta al hacer el deploy. Incluye el honeypot `bot-field`.
 - El formulario visible (`#wizard`) arma el envío con JavaScript:
-  - **Campos planos** para leer rápido en el panel: grupo, contacto, número de empresas, cuentas, bancos, créditos y coberturas, H2H, alojamiento, versión del aviso, fecha y hora de aceptación, y negativa a finalidades secundarias.
+  - **Campos planos** para leer rápido en el panel: grupo, contacto, número de empresas, cuentas, bancos, créditos y coberturas, H2H, alojamiento, versión del aviso, fecha y hora de aceptación, y negativas a boletines y a encuestas.
   - **`payload_json`**: todas las respuestas con su estructura (listas de empresas, cuentas, créditos y coberturas).
 - Sin archivos, el envío va URL‑encoded. Con archivos, va como `FormData` sin fijar el `Content-Type`.
 - Netlify limita cada envío a 8 MB y un archivo por campo. El navegador valida el tamaño y los tipos permitidos (`.txt, .csv, .xlsx, .xls, .xml, .pdf, .zip`) antes de enviar.
@@ -142,24 +142,13 @@ Marcados en amarillo en el sitio. Búsquelos con `grep -rn "PENDIENTE" .`.
 **Marca y diseño** — resuelto: logo de monhey.B en `assets/img/logo-monhey-b.png`; azul marino `#1E3956` (del logo), blanco y grises neutros en las variables `:root` de `assets/css/styles.css`. Para usar otro gris exacto, cambie `--c-fondo`, `--c-borde` y `--c-texto-suave`.
 1. ~~Marca~~ · 2. ~~Logotipo~~ · 3. ~~Colores~~
 
-**Aviso de privacidad (`aviso-de-privacidad.html` y avisos simplificados en `index.html`)**
-4. Nombre o razón social del responsable, y si es persona física o moral.
-5. Domicilio completo del responsable.
-6. Correo para derechos ARCO y revocación del consentimiento.
-7. Plazo de conservación de los datos.
-8. Finalidades secundarias: definirlas, o eliminarlas junto con la casilla de negativa en el paso 14.
-9. Proveedor de correo donde se reciben las notificaciones.
-10. Fecha de publicación del aviso. Al publicarlo, actualice la versión en `aviso-de-privacidad.html` y en `AVISO_VERSION` de `assets/js/form.js`.
-11. Revisión del abogado:
-    - plazos de respuesta ARCO;
-    - remisión internacional a Netlify;
-    - qué hacer si llega un archivo con datos de terceros.
-12. Quiénes tendrán acceso a la información, para la cláusula de confidencialidad.
+**Aviso de privacidad** — resuelto con el aviso integral de monhey.B (25 de noviembre de 2026), adaptado a los datos de este cuestionario: responsable, contacto, finalidades secundarias (boletines/promociones y encuestas, con una casilla de negativa para cada una), ARCO y plazos, revocación, limitación, conservación, cambios y autoridad. Versión `1.0` en `aviso-de-privacidad.html` y en `AVISO_VERSION` de `assets/js/form.js` (si publica una versión nueva, cambie ambas).
+4. ~~Responsable~~ · 5. ~~Domicilio~~ · 6. ~~Correo ARCO~~ · 7. ~~Conservación~~ · 8. ~~Finalidades secundarias~~ · 9. ~~Proveedor de correo~~ · 10. ~~Fecha~~ · 11. ~~Plazos ARCO y remisiones~~ · 12. ~~Acceso a la información~~
 
 **Contenido del formulario**
 13. Tiempo estimado de llenado (paso 0).
 14. Plazo de entrega y formato del diagnóstico para el cliente (paso 0).
-15. Plazo de respuesta y correo de contacto (`gracias.html`).
+15. Plazo de respuesta (`gracias.html`).
 
 **Netlify**
 16. Correo que recibirá las notificaciones de cada envío.
