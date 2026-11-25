@@ -1,7 +1,7 @@
 /* =========================================================================
    Diagnóstico de tesorería — estilos
    Marca monhey.B: azul marino #1E3956 (tomado del logo), blanco y grises
-   neutros. El amarillo del logo (#FCDD34) no se usa en la interfaz.
+   neutros. El amarillo del logo (#FCDD34) se usa en la barra de avance.
    Contraste AA: texto normal ≥ 4.5:1 sobre su fondo.
    ========================================================================= */
 :root {
@@ -9,6 +9,7 @@
   --c-primario: #1E3956;        /* azul marino del logo: botones, enlaces, barra de avance */
   --c-primario-oscuro: #162B40;
   --c-primario-suave: #ECEFF3;
+  --c-acento: #FCDD34;          /* amarillo del logo: barra de avance */
   --c-texto: #1F2937;
   --c-texto-suave: #4B5563;
   --c-fondo: #F3F4F6;
@@ -71,8 +72,8 @@ main.contenedor { padding-top: 1.5rem; padding-bottom: 2rem; }
 /* ---------- Avance ---------- */
 .avance { margin-bottom: 1rem; }
 .avance-texto { display: flex; justify-content: space-between; gap: 1rem; font-size: .9rem; color: var(--c-texto-suave); margin-bottom: .35rem; flex-wrap: wrap; }
-.avance-barra { height: 8px; background: #E5E7EB; border-radius: 99px; overflow: hidden; }
-.avance-relleno { height: 100%; width: 0; background: var(--c-primario); transition: width .25s ease; }
+.avance-barra { height: 8px; background: var(--c-primario); border-radius: 99px; overflow: hidden; }
+.avance-relleno { height: 100%; width: 0; background: var(--c-acento); transition: width .25s ease; }
 
 /* ---------- Tarjetas y pasos ---------- */
 .tarjeta {
