@@ -139,10 +139,8 @@ Las instrucciones también están dentro de `config/complejidad.json`.
 
 Marcados en amarillo en el sitio. Búsquelos con `grep -rn "PENDIENTE" .`.
 
-**Marca y diseño**
-1. Nombre o marca con la que se publica: encabezado y pie de `index.html`, `aviso-de-privacidad.html` y `gracias.html`.
-2. Logotipo (SVG o PNG): sustituir el texto de `.marca`; hay un comentario en `index.html`.
-3. Colores de marca: variables `:root` de `assets/css/styles.css`.
+**Marca y diseño** — resuelto: logo de monhey.B en `assets/img/logo-monhey-b.png`; azul marino `#1E3956` (del logo), blanco y grises neutros en las variables `:root` de `assets/css/styles.css`. Para usar otro gris exacto, cambie `--c-fondo`, `--c-borde` y `--c-texto-suave`.
+1. ~~Marca~~ · 2. ~~Logotipo~~ · 3. ~~Colores~~
 
 **Aviso de privacidad (`aviso-de-privacidad.html` y avisos simplificados en `index.html`)**
 4. Nombre o razón social del responsable, y si es persona física o moral.
