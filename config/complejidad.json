@@ -1,0 +1,116 @@
+{
+  "_instrucciones": [
+    "ESTRUCTURA PROPUESTA. Todos los valores null están [[PENDIENTE]] y deben definirse por el contralor; mientras haya null, diagnostico.html muestra los conteos pero no calcula niveles ni recomendación.",
+    "escala.niveles: nombres de los niveles de menor a mayor complejidad. El número de niveles lo define la longitud de esta lista.",
+    "Métrica numérica: 'umbrales' es una lista ascendente con (número de niveles - 1) valores. nivel = 1 + cuántos umbrales supera el valor (estrictamente mayor). Ej. con 3 niveles y umbrales [3, 6]: 1-3 → nivel 1; 4-6 → nivel 2; 7 o más → nivel 3.",
+    "Métrica sí/no: 'nivel_si' y 'nivel_no' son el nivel (1..número de niveles) que se asigna en cada caso.",
+    "agregacion_metricas: cómo se combina el nivel de las métricas de una dimensión: 'promedio' o 'maximo'.",
+    "dimensiones[].peso: peso de la dimensión en el puntaje total (promedio ponderado de los niveles de las dimensiones). Use 0 para excluir una dimensión.",
+    "clasificacion_total.umbrales: igual que en las métricas, aplicado al puntaje total para darle un nivel global.",
+    "recomendacion_*: suma de pesos por opción. Cada señal activa suma su 'peso' a la opción de 'favorece'. 'por_puntaje' suma su peso a 'por_encima_favorece' si el puntaje total es mayor que 'corte', o a 'por_debajo_favorece' en caso contrario. Use peso 0 para ignorar una señal. 'empate' es el texto que se muestra si las opciones suman lo mismo."
+  ],
+  "version": "0.1-estructura",
+  "escala": {
+    "niveles": ["Baja", "Media", "Alta"]
+  },
+  "agregacion_metricas": null,
+  "dimensiones": [
+    {
+      "id": "bancos_formatos",
+      "nombre": "Bancos y formatos de archivo",
+      "peso": null,
+      "metricas": [
+        { "id": "num_bancos", "umbrales": [null, null] },
+        { "id": "num_cuentas", "umbrales": [null, null] },
+        { "id": "num_formatos", "umbrales": [null, null] },
+        { "id": "num_bancos_h2h", "umbrales": [null, null] },
+        { "id": "num_canales", "umbrales": [null, null] },
+        { "id": "layouts_no_documentados", "nivel_si": null, "nivel_no": null }
+      ]
+    },
+    {
+      "id": "volumen",
+      "nombre": "Volumen de movimientos",
+      "peso": null,
+      "metricas": [
+        { "id": "movimientos_mes", "umbrales": [null, null] },
+        { "id": "pagos_mes", "umbrales": [null, null] },
+        { "id": "usa_dispersion_masiva", "nivel_si": null, "nivel_no": null }
+      ]
+    },
+    {
+      "id": "creditos_coberturas",
+      "nombre": "Créditos y coberturas",
+      "peso": null,
+      "metricas": [
+        { "id": "num_creditos", "umbrales": [null, null] },
+        { "id": "num_tasas_base", "umbrales": [null, null] },
+        { "id": "creditos_sin_tabla", "umbrales": [null, null] },
+        { "id": "num_coberturas_tasa", "umbrales": [null, null] },
+        { "id": "num_coberturas_fx", "umbrales": [null, null] },
+        { "id": "num_monedas", "umbrales": [null, null] }
+      ]
+    },
+    {
+      "id": "intercompanias",
+      "nombre": "Operaciones intercompañías",
+      "peso": null,
+      "metricas": [
+        { "id": "num_empresas", "umbrales": [null, null] },
+        { "id": "num_conceptos_ic", "umbrales": [null, null] },
+        { "id": "ic_no_identificadas", "nivel_si": null, "nivel_no": null },
+        { "id": "ic_con_intereses", "nivel_si": null, "nivel_no": null }
+      ]
+    },
+    {
+      "id": "sistemas",
+      "nombre": "Sistemas / ERP",
+      "peso": null,
+      "metricas": [
+        { "id": "num_erps", "umbrales": [null, null] },
+        { "id": "conciliacion_manual_o_excel", "nivel_si": null, "nivel_no": null },
+        { "id": "erp_sin_modulo_tesoreria", "nivel_si": null, "nivel_no": null }
+      ]
+    },
+    {
+      "id": "infraestructura",
+      "nombre": "Infraestructura",
+      "peso": null,
+      "metricas": [
+        { "id": "restriccion_salida_datos", "nivel_si": null, "nivel_no": null },
+        { "id": "actualizacion_intradia", "nivel_si": null, "nivel_no": null },
+        { "id": "num_usuarios", "umbrales": [null, null] },
+        { "id": "num_indicadores", "umbrales": [null, null] }
+      ]
+    }
+  ],
+  "clasificacion_total": {
+    "umbrales": [null, null]
+  },
+  "recomendacion_herramienta": {
+    "titulo": "Herramienta del tablero",
+    "opciones": { "powerbi": "Power BI", "interno": "Tablero web interno" },
+    "por_puntaje": { "corte": null, "por_encima_favorece": null, "por_debajo_favorece": null, "peso": null },
+    "senales": [
+      { "id": "tiene_licencias_powerbi", "favorece": "powerbi", "peso": null },
+      { "id": "tiene_gateway", "favorece": "powerbi", "peso": null },
+      { "id": "usa_m365", "favorece": null, "peso": null },
+      { "id": "actualizacion_intradia", "favorece": null, "peso": null },
+      { "id": "usuarios_mayor_a", "valor": null, "favorece": null, "peso": null }
+    ],
+    "empate": null
+  },
+  "recomendacion_alojamiento": {
+    "titulo": "Alojamiento",
+    "opciones": { "servidor_propio": "Servidor propio del cliente", "nube": "En línea (nube)" },
+    "por_puntaje": { "corte": null, "por_encima_favorece": null, "por_debajo_favorece": null, "peso": null },
+    "senales": [
+      { "id": "prefiere_servidor_propio", "favorece": "servidor_propio", "peso": null },
+      { "id": "prefiere_nube", "favorece": "nube", "peso": null },
+      { "id": "restriccion_salida_datos", "favorece": "servidor_propio", "peso": null },
+      { "id": "nube_identificada", "favorece": "nube", "peso": null },
+      { "id": "tiene_gateway", "favorece": null, "peso": null }
+    ],
+    "empate": null
+  }
+}
