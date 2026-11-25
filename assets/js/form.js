@@ -88,11 +88,11 @@
   function construirOpciones(raiz, uid) {
     $$('select[data-opc]', raiz).forEach(function (s) {
       if (s.options.length) return;
-      s.appendChild(el('option', { value: '', text: 'Selecciona…' }));
+      s.appendChild(el('option', { value: '', text: 'Seleccione…' }));
       (OPC[s.dataset.opc] || []).forEach(function (o) { s.appendChild(el('option', { value: o[0], text: o[1] })); });
     });
     $$('select[data-dyn]', raiz).forEach(function (s) {
-      if (!s.options.length) s.appendChild(el('option', { value: '', text: 'Selecciona…' }));
+      if (!s.options.length) s.appendChild(el('option', { value: '', text: 'Seleccione…' }));
     });
     $$('.opciones[data-grupo]', raiz).forEach(function (cont) {
       if (cont.dataset.listo) return;
@@ -249,7 +249,7 @@
         ? empresas.map(function (e) { return { valor: e, texto: e }; })
         : creditos.concat([{ valor: 'no_ligado', texto: 'No está ligada a un crédito específico' }]);
       s.innerHTML = '';
-      s.appendChild(el('option', { value: '', text: 'Selecciona…' }));
+      s.appendChild(el('option', { value: '', text: 'Seleccione…' }));
       ops.forEach(function (o) { s.appendChild(el('option', { value: o.valor, text: o.texto })); });
       if (actual && !ops.some(function (o) { return o.valor === actual; })) {
         s.appendChild(el('option', { value: actual, text: actual + ' (ya no está en la lista)' }));
